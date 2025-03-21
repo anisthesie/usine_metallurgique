@@ -7,8 +7,8 @@ public class Vendeur extends Station {
     //   ....
     //   .eM.
     //   ....
-    // M( x,   y ) : Case occupé par le usine.Vendeur
-    // e( x-1, y ) : Case où le usine.Vendeur prends ses entrées.
+    // M( x,   y ) : Case occupé par le Vendeur
+    // e( x-1, y ) : Case où le Vendeur prends ses entrées.
 
     public Vendeur( int positionX, int positionY ) {
         super( positionX, positionY );

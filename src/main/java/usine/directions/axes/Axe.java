@@ -1,4 +1,4 @@
-package usine.axes;
+package usine.directions.axes;
 
 import usine.Produit;
 
@@ -19,5 +19,5 @@ public interface Axe {
      * @param produit L'item que nous voulons modifier.
      * @param positionRelative La nouvelle positionRelative de l'item.
      */
-    void setPositionRelative(Produit produit, double positionRelative, int posX, int posY );
+    void setPositionRelative( Produit produit, double positionRelative, int posX, int posY );
 }

@@ -1,4 +1,4 @@
-package usine.machines;
+package usine.stations.machines;
 
 import usine.stations.Station;
 

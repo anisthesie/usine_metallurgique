@@ -1,4 +1,4 @@
-package usine.machines;
+package usine.stations.machines;
 
 import usine.PlacementIncorrectException;
 import usine.Usine;
@@ -9,9 +9,9 @@ public class FournaiseDeCoupellation extends Machine {
     //   ..Ms.
     //   .....
     // M( x,   y )   : Première case occupé par la Founaise
-    // O( x,   y-1 ) : deuxième case occupé par la usine.machines.Fournaise
-    // e( x-1, y-1 ) : Case où la usine.machines.Fournaise prend ses entrées.
-    // s( x+1, y )   : Case où la usine.machines.Fournaise place les sorties.
+    // O( x,   y-1 ) : deuxième case occupé par la Fournaise
+    // e( x-1, y-1 ) : Case où la Fournaise prend ses entrées.
+    // s( x+1, y )   : Case où la Fournaise place les sorties.
 
     public FournaiseDeCoupellation( int positionX, int positionY ) {
         super( positionX, positionY );

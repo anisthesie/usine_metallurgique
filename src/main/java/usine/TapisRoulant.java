@@ -117,7 +117,7 @@ public enum TapisRoulant {
      * que l'ancien tapis et qui termine à la même place que le nouveau.  S'il n'y a pas d'ancien tapis,
      * alors le nouveau tapis est placé.  Si le placement est impossible, alors une exception est lancée.
      * @param depart Le type du nouveau tapis.
-     * @exception usine.PlacementIncorrectException S'il est impossible de placer le tapis, soit parceque le nouveau
+     * @exception PlacementIncorrectException S'il est impossible de placer le tapis, soit parceque le nouveau
      * tapis est VIDE ou OCCUPE, soit l'ancien tapis est OCCUPE, soit l'ancien commence où le nouveau termine.
      */
     public TapisRoulant combine( TapisRoulant depart ) {
@@ -157,10 +157,10 @@ public enum TapisRoulant {
     }
 
     /**
-     * Retourne l'élément de l'énumération qui contient les usine.directions indiquées.
+     * Retourne l'élément de l'énumération qui contient les directions indiquées.
      * @param segment1 La direction que le résultat doit avoir dans le premier segment.
      * @param segment2 La direction que le résultat doit avoir dans le deuxième segment.
-     * @return Le type de Tapis roulant qui a les usine.directions demandées.
+     * @return Le type de Tapis roulant qui a les directions demandées.
      */
     public static TapisRoulant trouver( Direction2D segment1, Direction2D segment2 ) {
         TapisRoulant resultat = null;

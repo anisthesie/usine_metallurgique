@@ -1,10 +1,10 @@
 package usine.directions;
 
 import usine.Produit;
-import usine.axes.Horizontale;
+import usine.directions.axes.Horizontale;
 
 /**
- * La direction vers la droite sur la grille (direction positive sur l'usine.axes.Axe des x).
+ * La direction vers la droite sur la grille (direction positive sur l'Axe des x).
  */
 public class Droite extends Positive implements Horizontale {
     public Droite() {

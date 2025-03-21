@@ -1,10 +1,10 @@
 package usine.directions;
 
 import usine.Produit;
-import usine.axes.Horizontale;
+import usine.directions.axes.Horizontale;
 
 /**
- * La direction vers la gauche sur la grille (direction négative sur l'usine.axes.Axe des x).
+ * La direction vers la gauche sur la grille (direction négative sur l'Axe des x).
  */
 public class Gauche extends Negative implements Horizontale {
     public Gauche() {

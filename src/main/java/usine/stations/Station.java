@@ -21,4 +21,8 @@ public abstract class Station {
 
     public abstract void placer( int x, int y, Usine parent )
             throws PlacementIncorrectException;
+
+    public String getSymbole(){
+        return "S";
+    }
 }

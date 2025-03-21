@@ -1,10 +1,10 @@
 package usine.directions;
 
 import usine.Produit;
-import usine.axes.Vertical;
+import usine.directions.axes.Vertical;
 
 /**
- * La direction vers le haut sur la grille (direction négative sur l'usine.axes.Axe des y).
+ * La direction vers le haut sur la grille (direction négative sur l'Axe des y).
  */
 public class Haut extends Negative implements Vertical {
     public Haut() {

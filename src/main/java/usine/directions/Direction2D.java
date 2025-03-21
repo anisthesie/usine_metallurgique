@@ -1,19 +1,19 @@
 package usine.directions;
 
 import usine.Produit;
-import usine.axes.Axe;
+import usine.directions.axes.Axe;
 
 import java.util.Comparator;
 
 /**
  * Classe de base pour décrire le mouvement des Item dans la grille.
- * Puisqu'une case contient un tapis roulant qui a possiblement 2 usine.directions,
+ * Puisqu'une case contient un tapis roulant qui a possiblement 2 directions,
  * alors cette classe s'occupe des déplacements pour le premier segment d'un tapis roulant
  * dans une case et elle s'occupe des déplacements pour le deuxième segment d'une
  * tapis roulant dans une case.
  *
  * Nous avons seulement besoin d'une instance de chaque sous classe.
- * Ces instances sont préconstruites sous forme de constante dans la classe usine.directions.Direction2D.
+ * Ces instances sont préconstruites sous forme de constante dans la classe Direction2D.
  * Pour les méthodes suivantes, le terme 'position' indique la position relative d'un item sur un tapis roulant.
  * La position relative d'un Item est une valeur entre -0.5 et 0.5.
  * Donc, pour un segment qui à un déplacement positif, l'item entre à la position -0.5 d'un tapis roulant,
@@ -113,7 +113,7 @@ public abstract class Direction2D implements Axe, Comparator<Produit> {
      * @return Le déplacement réel qu'a subit l'item.  Si l'item arrive au bout du tapis avant d'avoir terminé
      * le déplacement, alors la distance qu'il lui reste à parcourir est retourné.
      */
-    public double avancerSegment1(Produit produit, double distance, int posX, int posY ) {
+    public double avancerSegment1( Produit produit, double distance, int posX, int posY ) {
         double positionRelative = getPositionRelative( produit, posX, posY );
         double deplacementPossible = 0.0;
 
@@ -134,7 +134,7 @@ public abstract class Direction2D implements Axe, Comparator<Produit> {
      * @return Le déplacement réel qu'a subit l'item.  Si l'item arrive au bout du tapis avant d'avoir terminé
      * le déplacement, alors la distance qu'il lui reste à parcourir est retourné.
      */
-    public double avancerSegment2(Produit produit, double distance, int posX, int posY ) {
+    public double avancerSegment2( Produit produit, double distance, int posX, int posY ) {
         double positionRelative = getPositionRelative( produit, posX, posY );
         double deplacementPossible = 0.0;
 

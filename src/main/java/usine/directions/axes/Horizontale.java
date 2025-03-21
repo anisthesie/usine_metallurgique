@@ -1,4 +1,4 @@
-package usine.axes;
+package usine.directions.axes;
 
 import usine.Produit;
 
@@ -12,7 +12,7 @@ public interface Horizontale extends Axe {
     }
 
     @Override
-    default void setPositionRelative(Produit produit, double positionRelative, int posX, int posY ) {
+    default void setPositionRelative( Produit produit, double positionRelative, int posX, int posY ) {
         produit.setX( positionRelative + posX );
     }
 }

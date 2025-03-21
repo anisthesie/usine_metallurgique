@@ -17,10 +17,10 @@ public class Mine extends Station {
     //   ....
     //   .Ms.
     //   ....
-    // M( x,   y ) : Case occupé par la usine.stations.Mine
-    // s( x+1, y ) : Case où la usine.stations.Mine place les sorties.
+    // M( x,   y ) : Case occupé par la Mine
+    // s( x+1, y ) : Case où la Mine place les sorties.
 
-    public Mine(IdentiteProduit minerai, int positionX, int positionY ) {
+    public Mine( IdentiteProduit minerai, int positionX, int positionY ) {
         super( positionX, positionY );
 
         this.minerai = minerai;

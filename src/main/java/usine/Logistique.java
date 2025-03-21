@@ -174,8 +174,8 @@ public class Logistique {
      * Construit un tapis roulant horizontal (sur une ligne) dans la grille.
      *
      * Place des tapis roulant de la case (x1,y) à la case (x2,y) dans la grille.
-     * Si x1 < x2, alors ce sont des usine.TapisRoulant.GAUCHE_DROITE.
-     * Si x2 < x1, alors ce sont des usine.TapisRoulant.DROITE_GAUCHE.
+     * Si x1 < x2, alors ce sont des TapisRoulant.GAUCHE_DROITE.
+     * Si x2 < x1, alors ce sont des TapisRoulant.DROITE_GAUCHE.
      * Si l'extrémité de départ du tapis roulant arrive sur l'extrémité final d'un autre tapis roulant, alors
      * le bon tapis roulant est placé pour connecté les deux.
      * Si l'extrémité final du tapis roulant arrive sur l'extrémité de départ d'un autre tapis roulant, alors
@@ -222,8 +222,8 @@ public class Logistique {
      * Construit un tapis roulant vertical (sur une colonne) dans la grille.
      *
      * Place des tapis roulant de la case (x,y1) à la case (x,y2) dans la grille.
-     * Si y1 < y2, alors ce sont des usine.TapisRoulant.HAUT_BAS.
-     * Si y2 < y1, alors ce sont des usine.TapisRoulant.BAS_HAUT.
+     * Si y1 < y2, alors ce sont des TapisRoulant.HAUT_BAS.
+     * Si y2 < y1, alors ce sont des TapisRoulant.BAS_HAUT.
      * Si l'extrémité de départ du tapis roulant arrive sur l'extrémité final d'un autre tapis roulant, alors
      * le bon tapis roulant est placé pour connecté les deux.
      * Si l'extrémité final du tapis roulant arrive sur l'extrémité de départ d'un autre tapis roulant, alors
@@ -316,7 +316,7 @@ public class Logistique {
     }
 
     /**
-     * Retourne l'item le plus proche de la fin du usine.TapisRoulant à la case indiquée.
+     * Retourne l'item le plus proche de la fin du TapisRoulant à la case indiquée.
      *
      * @param x Le numéro de colonne où consulter un item.  Doit être entre 0 et TailleX - 1.
      * @param y Le numéro de ligne où consulter un item.  Doit être entre 0 et TailleY - 1.

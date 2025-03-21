@@ -1,4 +1,4 @@
-package usine.axes;
+package usine.directions.axes;
 
 import usine.Produit;
 
@@ -12,7 +12,9 @@ public interface Vertical extends Axe {
     }
 
     @Override
-    default void setPositionRelative(Produit produit, double positionRelative, int posX, int posY ) {
+    default void setPositionRelative( Produit produit, double positionRelative, int posX, int posY ) {
         produit.setY( positionRelative + posY );
     }
+
+    int compare(Produit g, Produit d);
 }
