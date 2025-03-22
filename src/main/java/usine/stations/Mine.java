@@ -1,5 +1,6 @@
 package usine.stations;
 
+import input.Parser;
 import usine.IdentiteProduit;
 import usine.PlacementIncorrectException;
 import usine.Usine;
@@ -22,8 +23,16 @@ public class Mine extends Station {
 
     public Mine( IdentiteProduit minerai, int positionX, int positionY ) {
         super( positionX, positionY );
-
         this.minerai = minerai;
+    }
+
+    public Mine( IdentiteProduit minerai ) {
+        super();
+        this.minerai = minerai;
+    }
+
+    public IdentiteProduit getMinerai() {
+        return minerai;
     }
 
     @Override
@@ -33,6 +42,10 @@ public class Mine extends Station {
 
     @Override
     public void placer( int x, int y, Usine parent ) throws PlacementIncorrectException {
-
+        this.positionX = x;
+        this.positionY = y;
+        //parent.ajouterStation( this, x, y );
+        Parser.clearScreen();
+        System.out.println("Mine de " + minerai + " placée en (" + x + ", " + y + ")");
     }
 }

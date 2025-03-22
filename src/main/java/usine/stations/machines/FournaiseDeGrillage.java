@@ -17,17 +17,22 @@ public class FournaiseDeGrillage extends Machine {
     // f( x,   y-2 ) : Case où la Fournaise prend ses entrées pour la boite 2.
     // s( x+2, y )   : Case où la Fournaise place les sorties.
 
-    public FournaiseDeGrillage( int positionX, int positionY ) {
-        super( positionX, positionY );
+    public FournaiseDeGrillage(int positionX, int positionY) {
+        super(positionX, positionY);
+    }
+
+    public FournaiseDeGrillage() {
+        super();
+    }
+
+
+    @Override
+    public void tic(Usine parent) {
+
     }
 
     @Override
-    public void tic( Usine parent ) {
-
-    }
-
-    @Override
-    public void placer( int x, int y, Usine parent ) throws PlacementIncorrectException {
+    public void placer(int x, int y, Usine parent) throws PlacementIncorrectException {
 
     }
 }

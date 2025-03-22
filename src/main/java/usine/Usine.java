@@ -1,6 +1,7 @@
 package usine;
 
 import input.Parser;
+import usine.directions.Direction2D;
 import usine.stations.Station;
 
 public class Usine {
@@ -54,7 +55,7 @@ public class Usine {
 
         for (int x = 0; x < tailleX; x++) {
             for (int y = 0; y < tailleY; y++){
-                int indexLineaire = x * tailleY + y;
+                int indexLineaire = Direction2D.cartesianToLinear(x, y, tailleY);
                 Station courante = stations[y][x];
                 TapisRoulant tapis = logistique.getTapis(x, y);
 
@@ -83,6 +84,17 @@ public class Usine {
         }
     }
 
+    public int getTailleX() {
+        return tailleX;
+    }
+
+    public int getTailleY() {
+        return tailleY;
+    }
+
+    public Logistique getLogistique() {
+        return logistique;
+    }
 
     public int getVente(IdentiteProduit idProduit) {
         return 0;

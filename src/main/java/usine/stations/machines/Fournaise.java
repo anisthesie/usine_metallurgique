@@ -21,6 +21,10 @@ public class Fournaise extends Machine {
         super( positionX, positionY );
     }
 
+    public Fournaise() {
+        super();
+    }
+
     @Override
     public void tic( Usine parent ) {
 

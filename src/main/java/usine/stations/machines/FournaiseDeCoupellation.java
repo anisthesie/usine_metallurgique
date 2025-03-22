@@ -17,6 +17,10 @@ public class FournaiseDeCoupellation extends Machine {
         super( positionX, positionY );
     }
 
+    public FournaiseDeCoupellation() {
+        super();
+    }
+
     @Override
     public void tic( Usine parent ) {
 

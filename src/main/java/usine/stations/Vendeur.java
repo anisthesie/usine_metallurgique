@@ -14,6 +14,10 @@ public class Vendeur extends Station {
         super( positionX, positionY );
     }
 
+    public Vendeur() {
+        super();
+    }
+
     @Override
     public void tic( Usine parent ) {
 

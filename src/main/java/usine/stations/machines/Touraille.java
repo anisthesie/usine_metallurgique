@@ -19,6 +19,10 @@ public class Touraille extends Machine {
         super( positionX, positionY );
     }
 
+    public Touraille() {
+        super();
+    }
+
     @Override
     public void tic( Usine parent ) {
 

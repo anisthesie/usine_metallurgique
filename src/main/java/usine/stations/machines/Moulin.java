@@ -21,6 +21,10 @@ public class Moulin extends Machine {
         super( positionX, positionY );
     }
 
+    public Moulin() {
+        super();
+    }
+
     @Override
     public void tic( Usine parent ) {
 
