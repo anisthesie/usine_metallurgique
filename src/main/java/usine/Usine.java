@@ -1,8 +1,12 @@
 package usine;
 
 import input.Parser;
-import usine.stations.Mine;
+import usine.geometrie.Geometrie;
+import usine.geometrie.Position;
 import usine.stations.Station;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Usine {
     protected int tailleX;
@@ -11,13 +15,17 @@ public class Usine {
     // contient les tapis Roulants.
     protected Logistique logistique;
     // contient les stations de l'usine.
-    protected Station[][] stations;
+    protected Case[][] cases;
+    // contient les stations
+    protected List<Station> stations;
 
     public Usine(int tailleX, int tailleY) {
         this.tailleX = tailleX;
         this.tailleY = tailleY;
         logistique = new Logistique(tailleX, tailleY);
-        stations = new Station[tailleY][tailleX];
+        stations = new ArrayList<>();
+        this.cases = new Case[tailleX][tailleY];
+        initCases();
     }
 
     public void setTapisHorizontal(int y, int x1, int x2) {
@@ -37,34 +45,21 @@ public class Usine {
     }
 
     public void tic() {
-        logistique.tic();
 
-        for (int y = 0; y < tailleY; ++y) {
-            for (int x = 0; x < tailleX; ++x) {
-                Station courante = stations[y][x];
-                if (null != courante) {
-                    courante.tic(this);
-                }
-            }
+        logistique.tic();
+        for (Station station : stations) {
+            station.tic(this);
         }
     }
 
     public void afficher() {
         Parser.clearScreen();
-        int indexLineaire = 0;
 
         for (int y = 0; y < tailleY; ++y) {
             for (int x = 0; x < tailleX; ++x) {
 
-                Station courante = stations[y][x];
-                TapisRoulant tapis = logistique.getTapis(x, y);
-
-                String symbole = String.valueOf(indexLineaire);
-                if (courante != null && courante.isPlaced()) {
-                    symbole = courante.getSymbole();
-                } else if (tapis != null && tapis != TapisRoulant.VIDE && tapis != TapisRoulant.OCCUPE) {
-                    symbole = tapis.afficheMilieu();
-                }
+                Case courante = cases[x][y];
+                String symbole = courante.getSymbole();
 
                 int indentationRelative = 3 - symbole.length();
                 if (x == 0) System.out.print("|");
@@ -74,62 +69,14 @@ public class Usine {
                 System.out.print(symbole);
                 System.out.print(" | ");
 
-                indexLineaire++;
-
             }
             System.out.println();
         }
 
     }
 
-    /*
-    public void afficherA() {
-
-        Parser.clearScreen();
-        Map<String, String> map = new HashMap<>();
-
-        for (int x = 0; x < tailleY; x++) {
-            for (int y = 0; y < tailleX; y++) {
-                int indexLineaire = Direction2D.cartesianToLinear(x, y, tailleX);
-                // y,x
-                Station courante = stations[y][x];
-                TapisRoulant tapis = logistique.getTapis(x, y);
-
-                String symbole = String.valueOf(indexLineaire);
-
-                if (courante != null && courante.isPlaced())
-                    symbole = courante.getSymbole();
-                else if (tapis != null && tapis != TapisRoulant.VIDE && tapis != TapisRoulant.OCCUPE)
-                    symbole = tapis.afficheMilieu();
-
-
-                int indentationRelative = 3 - symbole.length();
-
-                if (y == 0)
-                    System.out.print("|");
-
-                for (int i = 0; i < indentationRelative; i++)
-                    System.out.print(" ");
-                System.out.print(symbole);
-                System.out.print(" | ");
-                map.put(String.valueOf(indexLineaire), "x:" + x + " y:" + y);
-
-            }
-            System.out.println();
-        }
-        for (String s : map.keySet()) {
-            // System.out.println(s + " : " + map.get(s));
-        }
-    }
-
-     */
-
-
-    public void ajouterStation(Mine mine, int x, int y) throws PlacementIncorrectException {
-        if (stations[y][x] != null) {
-            throw new PlacementIncorrectException("La case est déjà occupée.");
-        }
-        stations[y][x] = mine;
+    public void ajouterStation(Station station) {
+        stations.add(station);
     }
 
     public int getTailleX() {
@@ -148,5 +95,26 @@ public class Usine {
         return 0;
     }
 
+    private void initCases() {
+        for (int x = 0; x < tailleX; x++) {
+            for (int y = 0; y < tailleY; y++) {
+                cases[x][y] = new Case(x, y, this);
+            }
+        }
+    }
 
+    public Case getCase(int x, int y) {
+        if (x < 0 || x >= tailleX || y < 0 || y >= tailleY)
+            return null;
+        return cases[x][y];
+    }
+
+    public Case getCase(int indexLineaire) {
+        Position position = Geometrie.lineaireVersCartesien(indexLineaire, tailleX);
+        return getCase(position.getX(), position.getY());
+    }
+
+    public Case[][] getCases() {
+        return cases;
+    }
 }

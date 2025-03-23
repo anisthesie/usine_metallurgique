@@ -1,7 +1,7 @@
-package usine.directions;
+package usine.geometrie.directions;
 
 import usine.Produit;
-import usine.directions.axes.Vertical;
+import usine.geometrie.directions.axes.Vertical;
 
 /**
  * La direction vers le bas sur la grille (direction positive sur l'Axe des y).

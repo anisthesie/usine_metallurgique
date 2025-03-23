@@ -1,7 +1,7 @@
-package usine.directions;
+package usine.geometrie.directions;
 
 import usine.Produit;
-import usine.directions.axes.Axe;
+import usine.geometrie.directions.axes.Axe;
 
 import java.util.Comparator;
 
@@ -145,13 +145,5 @@ public abstract class Direction2D implements Axe, Comparator<Produit> {
 
         setPositionRelative( produit, positionRelative, posX, posY );
         return distance - deplacementPossible;
-    }
-
-    public static int cartesianToLinear(int x, int y, int width) {
-        return y * width + x;
-    }
-
-    public static int[] linearToCartesian(int index, int width) {
-        return new int[] {index % width, index / width};
     }
 }

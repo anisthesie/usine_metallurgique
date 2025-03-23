@@ -1,9 +1,10 @@
 package usine.stations;
 
-import input.Parser;
+import usine.Case;
 import usine.IdentiteProduit;
 import usine.PlacementIncorrectException;
 import usine.Usine;
+import usine.geometrie.Geometrie;
 
 public class Mine extends Station {
     protected IdentiteProduit minerai;
@@ -42,11 +43,40 @@ public class Mine extends Station {
 
     @Override
     public void placer(int x, int y, Usine parent) throws PlacementIncorrectException {
-        parent.ajouterStation(this, x, y);
-        this.positionX = x;
-        this.positionY = y;
+        Case case1 = parent.getCase(x, y);
+        Case case2 = parent.getCase(x + 1, y);
 
-        Parser.clearScreen();
-        System.out.println("Mine de " + minerai + " placée en (" + x + ", " + y + ")");
+        if (case1 == null || case2 == null || case1.isOccupe() || case2.isOccupe())
+            throw new PlacementIncorrectException("Impossible de placer l'élement dans la case (" + Geometrie.cartesienVersLineaire(x, y, parent.getTailleX()) + ")");
+
+        parent.ajouterStation(this);
+
+        this.position.setX(x);
+        this.position.setY(y);
+
+        case1.setStation(this);
+        case2.setStation(this);
+
+        case1.setSymbole(getSymbole());
+        case2.setSymbole("-->");
+
+    }
+
+
+    @Override
+    public String getSymbole() {
+
+        switch (minerai) {
+            case ACANTHITE:
+                return "ACT";
+            case CASSITERITE:
+                return "CST";
+            case CHALCOCITE:
+                return "CLT";
+            case CHARBON:
+                return "CHB";
+            default:
+                return "M";
+        }
     }
 }

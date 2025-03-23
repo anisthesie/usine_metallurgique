@@ -1,9 +1,11 @@
 import input.Command;
 import input.Parser;
 import usine.IdentiteProduit;
+import usine.PlacementIncorrectException;
 import usine.TapisRoulant;
 import usine.Usine;
-import usine.directions.Direction2D;
+import usine.geometrie.Geometrie;
+import usine.geometrie.Position;
 import usine.stations.Mine;
 import usine.stations.Station;
 import usine.stations.Vendeur;
@@ -39,7 +41,7 @@ public class Main {
                 System.out.println("3. Tapis roulant");
                 System.out.println("Que voulez-vous placer? : ");
 
-                Station station = null;
+                Station station;
                 TapisRoulant tapis = null;
                 int premier_choix = Parser.getInt(1, 3);
                 int second_choix = 0;
@@ -88,19 +90,37 @@ public class Main {
                 Parser.clearScreen();
                 usine.afficher();
                 System.out.println();
-                int numCase = Parser.getCaseNumber(usine);
-                int[] cords = Direction2D.linearToCartesian(numCase, usine.getTailleX());
-                int x = cords[0];
-                int y = cords[1];
 
-                if(premier_choix == 1 || premier_choix == 2) {
+                int numCase = Parser.getCaseNumber(usine);
+
+
+                Position position = Geometrie.lineaireVersCartesien(numCase, usine.getTailleX());
+                int x = position.getX();
+                int y = position.getY();
+
+                if (premier_choix == 1 || premier_choix == 2) {
                     station = createStation(premier_choix, second_choix);
-                    station.placer(x, y, usine);
+
+                    boolean success = false;
+
+                    while(!success) {
+                        try {
+                            station.placer(x, y, usine);
+                            success = true;
+                        } catch (PlacementIncorrectException e) {
+                            System.out.println(e.getMessage());
+                            numCase = Parser.getCaseNumber(usine);
+                            position = Geometrie.lineaireVersCartesien(numCase, usine.getTailleX());
+                            x = position.getX();
+                            y = position.getY();
+                        }
+                    }
+
 
                 } else {
                     tapis = TapisRoulant.BAS_DROITE;
                     System.out.println("Tapis roulant placé dans la position : " + numCase);
-                   // usine.placerTapisRoulant(tapis, numCase);
+                    // usine.placerTapisRoulant(tapis, numCase);
                 }
 
 

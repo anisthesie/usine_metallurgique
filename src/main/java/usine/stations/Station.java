@@ -1,20 +1,20 @@
 package usine.stations;
 
+import usine.Case;
 import usine.PlacementIncorrectException;
 import usine.Usine;
+import usine.geometrie.Geometrie;
+import usine.geometrie.Position;
 
 public abstract class Station {
-    protected int positionX;
-    protected int positionY;
+    protected Position position;
 
     public Station(int positionX, int positionY) {
-        this.positionX = positionX;
-        this.positionY = positionY;
+        this.position = new Position(positionX, positionY);
     }
 
     public Station() {
-        this.positionX = -1;
-        this.positionY = -1;
+        this.position = new Position(-1, -1);
     }
 
     /**
@@ -28,8 +28,9 @@ public abstract class Station {
     public abstract void placer(int x, int y, Usine parent)
             throws PlacementIncorrectException;
 
+
     public boolean isPlaced() {
-        return positionX != -1 && positionY != -1;
+        return position.getX() != -1 && position.getY() != -1;
     }
 
     public String getSymbole() {

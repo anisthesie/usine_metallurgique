@@ -1,7 +1,7 @@
 package input;
 
 import usine.Usine;
-import usine.directions.Direction2D;
+import usine.geometrie.Geometrie;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,8 +16,9 @@ public class Parser {
 
     public static int getCaseNumber(Usine usine) {
 
-        System.out.print("Entrez la numéro de case où placer l'élément : ");
-        return getInt(0, Direction2D.cartesianToLinear(usine.getTailleX() - 1, usine.getTailleY() - 1, usine.getTailleY()));
+        System.out.print("Entrez le numéro de case où placer l'élément : ");
+        return getInt(0, Geometrie.cartesienVersLineaire(usine.getTailleX() - 1, usine.getTailleY() - 1, usine.getTailleX()));
+
     }
 
     public static int getInt(int min, int max) {

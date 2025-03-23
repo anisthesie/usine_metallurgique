@@ -1,4 +1,4 @@
-package usine.directions;
+package usine.geometrie.directions;
 
 public abstract class Negative extends Direction2D {
     private static final double DIRECTION = -1.0;

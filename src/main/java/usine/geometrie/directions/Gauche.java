@@ -1,7 +1,7 @@
-package usine.directions;
+package usine.geometrie.directions;
 
 import usine.Produit;
-import usine.directions.axes.Horizontale;
+import usine.geometrie.directions.axes.Horizontale;
 
 /**
  * La direction vers la gauche sur la grille (direction négative sur l'Axe des x).

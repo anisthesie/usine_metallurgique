@@ -1,6 +1,6 @@
 package usine;
 
-import usine.directions.Direction2D;
+import usine.geometrie.directions.Direction2D;
 
 import java.util.ArrayList;
 import java.util.Arrays;

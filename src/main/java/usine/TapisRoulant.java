@@ -1,6 +1,6 @@
 package usine;
 
-import usine.directions.Direction2D;
+import usine.geometrie.directions.Direction2D;
 
 /**
  * Ce type énuméré décrit les différentes 'type' de tapis roulant.

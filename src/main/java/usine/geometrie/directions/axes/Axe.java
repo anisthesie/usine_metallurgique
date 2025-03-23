@@ -1,4 +1,4 @@
-package usine.directions.axes;
+package usine.geometrie.directions.axes;
 
 import usine.Produit;
 
