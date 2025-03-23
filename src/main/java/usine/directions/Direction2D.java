@@ -147,11 +147,11 @@ public abstract class Direction2D implements Axe, Comparator<Produit> {
         return distance - deplacementPossible;
     }
 
-    public static int cartesianToLinear(int x, int y, int height) {
-        return x * height + y;
+    public static int cartesianToLinear(int x, int y, int width) {
+        return y * width + x;
     }
 
-    public static int[] linearToCartesian(int index, int height) {
-        return new int[] {index % height, index / height};
+    public static int[] linearToCartesian(int index, int width) {
+        return new int[] {index % width, index / width};
     }
 }

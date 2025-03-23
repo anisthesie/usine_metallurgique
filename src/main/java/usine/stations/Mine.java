@@ -21,12 +21,12 @@ public class Mine extends Station {
     // M( x,   y ) : Case occupé par la Mine
     // s( x+1, y ) : Case où la Mine place les sorties.
 
-    public Mine( IdentiteProduit minerai, int positionX, int positionY ) {
-        super( positionX, positionY );
+    public Mine(IdentiteProduit minerai, int positionX, int positionY) {
+        super(positionX, positionY);
         this.minerai = minerai;
     }
 
-    public Mine( IdentiteProduit minerai ) {
+    public Mine(IdentiteProduit minerai) {
         super();
         this.minerai = minerai;
     }
@@ -36,15 +36,16 @@ public class Mine extends Station {
     }
 
     @Override
-    public void tic( Usine parent ) {
+    public void tic(Usine parent) {
 
     }
 
     @Override
-    public void placer( int x, int y, Usine parent ) throws PlacementIncorrectException {
+    public void placer(int x, int y, Usine parent) throws PlacementIncorrectException {
+        parent.ajouterStation(this, x, y);
         this.positionX = x;
         this.positionY = y;
-        //parent.ajouterStation( this, x, y );
+
         Parser.clearScreen();
         System.out.println("Mine de " + minerai + " placée en (" + x + ", " + y + ")");
     }

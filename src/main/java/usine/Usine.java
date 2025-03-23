@@ -1,7 +1,7 @@
 package usine;
 
 import input.Parser;
-import usine.directions.Direction2D;
+import usine.stations.Mine;
 import usine.stations.Station;
 
 public class Usine {
@@ -50,38 +50,86 @@ public class Usine {
     }
 
     public void afficher() {
-
         Parser.clearScreen();
+        int indexLineaire = 0;
 
-        for (int x = 0; x < tailleX; x++) {
-            for (int y = 0; y < tailleY; y++){
-                int indexLineaire = Direction2D.cartesianToLinear(x, y, tailleY);
+        for (int y = 0; y < tailleY; ++y) {
+            for (int x = 0; x < tailleX; ++x) {
+
                 Station courante = stations[y][x];
                 TapisRoulant tapis = logistique.getTapis(x, y);
 
-                String symbole = "T";
-
-                if(tapis== TapisRoulant.VIDE){
-                    symbole = String.valueOf(indexLineaire);
-                }
-                else if (tapis == TapisRoulant.OCCUPE){
+                String symbole = String.valueOf(indexLineaire);
+                if (courante != null && courante.isPlaced()) {
                     symbole = courante.getSymbole();
+                } else if (tapis != null && tapis != TapisRoulant.VIDE && tapis != TapisRoulant.OCCUPE) {
+                    symbole = tapis.afficheMilieu();
                 }
-
 
                 int indentationRelative = 3 - symbole.length();
+                if (x == 0) System.out.print("|");
 
-                if(y == 0)
-                    System.out.print("|");
-
-                for(int i = 0; i < indentationRelative;i++)
+                for (int i = 0; i < indentationRelative; i++)
                     System.out.print(" ");
-                System.out.print(indexLineaire);
+                System.out.print(symbole);
                 System.out.print(" | ");
+
+                indexLineaire++;
 
             }
             System.out.println();
         }
+
+    }
+
+    /*
+    public void afficherA() {
+
+        Parser.clearScreen();
+        Map<String, String> map = new HashMap<>();
+
+        for (int x = 0; x < tailleY; x++) {
+            for (int y = 0; y < tailleX; y++) {
+                int indexLineaire = Direction2D.cartesianToLinear(x, y, tailleX);
+                // y,x
+                Station courante = stations[y][x];
+                TapisRoulant tapis = logistique.getTapis(x, y);
+
+                String symbole = String.valueOf(indexLineaire);
+
+                if (courante != null && courante.isPlaced())
+                    symbole = courante.getSymbole();
+                else if (tapis != null && tapis != TapisRoulant.VIDE && tapis != TapisRoulant.OCCUPE)
+                    symbole = tapis.afficheMilieu();
+
+
+                int indentationRelative = 3 - symbole.length();
+
+                if (y == 0)
+                    System.out.print("|");
+
+                for (int i = 0; i < indentationRelative; i++)
+                    System.out.print(" ");
+                System.out.print(symbole);
+                System.out.print(" | ");
+                map.put(String.valueOf(indexLineaire), "x:" + x + " y:" + y);
+
+            }
+            System.out.println();
+        }
+        for (String s : map.keySet()) {
+            // System.out.println(s + " : " + map.get(s));
+        }
+    }
+
+     */
+
+
+    public void ajouterStation(Mine mine, int x, int y) throws PlacementIncorrectException {
+        if (stations[y][x] != null) {
+            throw new PlacementIncorrectException("La case est déjà occupée.");
+        }
+        stations[y][x] = mine;
     }
 
     public int getTailleX() {
@@ -99,4 +147,6 @@ public class Usine {
     public int getVente(IdentiteProduit idProduit) {
         return 0;
     }
+
+
 }

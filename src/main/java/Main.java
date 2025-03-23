@@ -89,7 +89,7 @@ public class Main {
                 usine.afficher();
                 System.out.println();
                 int numCase = Parser.getCaseNumber(usine);
-                int[] cords = Direction2D.linearToCartesian(numCase, usine.getTailleY());
+                int[] cords = Direction2D.linearToCartesian(numCase, usine.getTailleX());
                 int x = cords[0];
                 int y = cords[1];
 
