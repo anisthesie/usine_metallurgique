@@ -1,7 +1,9 @@
 package usine.stations.machines;
 
+import usine.Case;
 import usine.PlacementIncorrectException;
 import usine.Usine;
+import usine.geometrie.Geometrie;
 
 public class Moulin extends Machine {
     //   ......
@@ -32,6 +34,32 @@ public class Moulin extends Machine {
 
     @Override
     public void placer( int x, int y, Usine parent ) throws PlacementIncorrectException {
+        Case[] cases = {
+                parent.getCase(x, y),
+                parent.getCase(x + 1, y)
+        };
 
+        Case entree = parent.getCase(x - 1, y);
+
+        Case sortie = parent.getCase(x + 2, y);
+
+        if (!this.areCasesValid(cases))
+            throw new PlacementIncorrectException("Impossible de placer l'élement dans la case (" + Geometrie.cartesienVersLineaire(x, y, parent.getTailleX()) + ")");
+
+        parent.ajouterStation(this);
+        this.position.setX(x);
+        this.position.setY(y);
+
+        for (Case c : cases) {
+            c.setStation(this);
+            c.setSymbole(getSymbole());
+        }
+
+
+    }
+
+    @Override
+    public String getSymbole() {
+        return "MOU";
     }
 }

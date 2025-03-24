@@ -87,12 +87,16 @@ public class Main {
                         break;
                 }
 
+                usine.setAfficherIndex(true);
+
                 Parser.clearScreen();
                 usine.afficher();
                 System.out.println();
 
+
                 int numCase = Parser.getCaseNumber(usine);
 
+                usine.setAfficherIndex(false);
 
                 Position position = Geometrie.lineaireVersCartesien(numCase, usine.getTailleX());
                 int x = position.getX();

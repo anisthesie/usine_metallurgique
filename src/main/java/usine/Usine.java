@@ -12,6 +12,8 @@ public class Usine {
     protected int tailleX;
     protected int tailleY;
 
+    protected boolean afficherIndex;
+
     // contient les tapis Roulants.
     protected Logistique logistique;
     // contient les stations de l'usine.
@@ -116,5 +118,13 @@ public class Usine {
 
     public Case[][] getCases() {
         return cases;
+    }
+
+    public boolean isAfficherIndex() {
+        return afficherIndex;
+    }
+
+    public void setAfficherIndex(boolean afficherIndex) {
+        this.afficherIndex = afficherIndex;
     }
 }

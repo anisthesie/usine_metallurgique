@@ -30,7 +30,7 @@ public class Vendeur extends Station {
         Case case1 = parent.getCase(x - 1, y);
         Case case2 = parent.getCase(x, y);
 
-        if (case1 == null || case2 == null || case1.isOccupe() || case2.isOccupe())
+        if(!this.areCasesValid(case1, case2))
             throw new PlacementIncorrectException("Impossible de placer l'élement dans la case (" + Geometrie.cartesienVersLineaire(x, y, parent.getTailleX()) + ")");
 
 

@@ -1,7 +1,9 @@
 package usine.stations.machines;
 
+import usine.Case;
 import usine.PlacementIncorrectException;
 import usine.Usine;
+import usine.geometrie.Geometrie;
 
 public class Fournaise extends Machine {
     //   ......
@@ -17,8 +19,8 @@ public class Fournaise extends Machine {
     // f( x-1, y+1 ) : Case où la Fournaise prend ses entrées pour la boite 2.
     // s( x+2, y )   : Case où la Fournaise place les sorties.
 
-    public Fournaise( int positionX, int positionY ) {
-        super( positionX, positionY );
+    public Fournaise(int positionX, int positionY) {
+        super(positionX, positionY);
     }
 
     public Fournaise() {
@@ -26,12 +28,38 @@ public class Fournaise extends Machine {
     }
 
     @Override
-    public void tic( Usine parent ) {
+    public void tic(Usine parent) {
 
     }
 
     @Override
-    public void placer( int x, int y, Usine parent ) throws PlacementIncorrectException {
+    public void placer(int x, int y, Usine parent) throws PlacementIncorrectException {
 
+        Case[] cases = {parent.getCase(x, y), parent.getCase(x, y - 1), parent.getCase(x + 1, y), parent.getCase(x, y + 1)};
+
+
+        Case entree1 = parent.getCase(x - 1, y - 1);
+        Case entree2 = parent.getCase(x - 1, y + 1);
+
+        Case sortie = parent.getCase(x + 2, y);
+
+        if (!this.areCasesValid(cases))
+            throw new PlacementIncorrectException("Impossible de placer l'élement dans la case (" + Geometrie.cartesienVersLineaire(x, y, parent.getTailleX()) + ")");
+
+        parent.ajouterStation(this);
+        this.position.setX(x);
+        this.position.setY(y);
+
+        for (Case c : cases) {
+            c.setStation(this);
+            c.setSymbole(getSymbole());
+        }
+
+
+    }
+
+    @Override
+    public String getSymbole() {
+        return "FOU";
     }
 }

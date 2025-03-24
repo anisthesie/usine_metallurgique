@@ -15,10 +15,8 @@ public class Parser {
     }
 
     public static int getCaseNumber(Usine usine) {
-
         System.out.print("Entrez le numéro de case où placer l'élément : ");
         return getInt(0, Geometrie.cartesienVersLineaire(usine.getTailleX() - 1, usine.getTailleY() - 1, usine.getTailleX()));
-
     }
 
     public static int getInt(int min, int max) {

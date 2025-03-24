@@ -33,6 +33,13 @@ public abstract class Station {
         return position.getX() != -1 && position.getY() != -1;
     }
 
+    public boolean areCasesValid(Case... cases) {
+        for (Case c : cases)
+            if(c == null || c.isOccupe())
+                return false;
+        return true;
+    }
+
     public String getSymbole() {
         return "S";
     }

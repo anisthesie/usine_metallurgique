@@ -1,7 +1,6 @@
 package usine;
 
 import usine.geometrie.Geometrie;
-import usine.geometrie.directions.Direction2D;
 import usine.stations.Station;
 
 public class Case {
@@ -24,6 +23,8 @@ public class Case {
     }
 
     public String getSymbole() {
+        if (!isOccupe() && !usine.isAfficherIndex())
+            return " ";
         return symbole;
     }
 
