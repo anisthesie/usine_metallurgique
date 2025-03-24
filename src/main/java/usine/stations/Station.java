@@ -3,7 +3,6 @@ package usine.stations;
 import usine.Case;
 import usine.PlacementIncorrectException;
 import usine.Usine;
-import usine.geometrie.Geometrie;
 import usine.geometrie.Position;
 
 public abstract class Station {
@@ -35,8 +34,9 @@ public abstract class Station {
 
     public boolean areCasesValid(Case... cases) {
         for (Case c : cases)
-            if(c == null || c.isOccupe())
+            if (c == null || c.isOccupe())
                 return false;
+
         return true;
     }
 

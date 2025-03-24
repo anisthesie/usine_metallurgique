@@ -1,13 +1,11 @@
 package usine.stations;
 
-import usine.Case;
-import usine.IdentiteProduit;
-import usine.PlacementIncorrectException;
-import usine.Usine;
+import usine.*;
 import usine.geometrie.Geometrie;
 
 public class Mine extends Station {
     protected IdentiteProduit minerai;
+    private int compteur = 0;
 
     // Recettes    | temps
     // ------------+----------
@@ -38,15 +36,45 @@ public class Mine extends Station {
 
     @Override
     public void tic(Usine parent) {
-
+        switch (minerai) {
+            case CHARBON:
+                if (compteur == 1) {
+                    try {
+                        parent.getLogistique().placerItem(this.position.getX() + 1, this.position.getY(), new Produit(IdentiteProduit.CHARBON));
+                    } catch (PlacementIncorrectException e) {
+                        parent.ajouterNotification(
+                                "L'usine de charbon en (" + this.position.getX() + "," + this.position.getY() + ") a construit un objet mais n'a pas trouvé de tapis roulant à sa droite.");
+                    }
+                    compteur = 0;
+                }
+                break;
+            case ACANTHITE:
+                if (compteur == 2) {
+                    //parent.ajouterProduit(IdentiteProduit.ACANTHITE);
+                    compteur = 0;
+                }
+                break;
+            case CASSITERITE:
+                if (compteur == 7) {
+                    //parent.ajouterProduit(IdentiteProduit.CASSITERITE);
+                    compteur = 0;
+                }
+                break;
+            case CHALCOCITE:
+                if (compteur == 3) {
+                    //parent.ajouterProduit(IdentiteProduit.CHALCOCITE);
+                    compteur = 0;
+                }
+                break;
+        }
+        compteur++;
     }
 
     @Override
     public void placer(int x, int y, Usine parent) throws PlacementIncorrectException {
-        Case case1 = parent.getCase(x, y);
-        Case case2 = parent.getCase(x + 1, y);
+        Case[] cases = {parent.getCase(x, y)};
 
-        if (!this.areCasesValid(case1, case2))
+        if (!this.areCasesValid(cases))
             throw new PlacementIncorrectException("Impossible de placer l'élement dans la case (" + Geometrie.cartesienVersLineaire(x, y, parent.getTailleX()) + ")");
 
         parent.ajouterStation(this);
@@ -54,11 +82,12 @@ public class Mine extends Station {
         this.position.setX(x);
         this.position.setY(y);
 
-        case1.setStation(this);
-        case2.setStation(this);
+        for (Case c : cases) {
+            c.setStation(this);
+            c.setSymbole(getSymbole());
+            parent.getLogistique().setTapis(c.getX(), c.getY(), TapisRoulant.OCCUPE);
+        }
 
-        case1.setSymbole(getSymbole());
-        case2.setSymbole("-->");
 
     }
 

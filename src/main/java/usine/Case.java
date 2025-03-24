@@ -41,6 +41,14 @@ public class Case {
     }
 
     public boolean isOccupe() {
-        return station != null;
+        return station != null || usine.getLogistique().getTapis(x, y) != TapisRoulant.VIDE || usine.getLogistique().getTapis(x, y) == TapisRoulant.OCCUPE;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

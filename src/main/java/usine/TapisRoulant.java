@@ -1,5 +1,6 @@
 package usine;
 
+import input.Command;
 import usine.geometrie.directions.Direction2D;
 
 /**
@@ -27,29 +28,29 @@ public enum TapisRoulant {
     OCCUPE( "xxx", "x.x", "xxx",
             null, null ),
     HAUT_DROITE( " | ", " >-", "   ",
-            Direction2D.BAS , Direction2D.DROITE ),
+            Direction2D.HAUT , Direction2D.DROITE ),
     HAUT_BAS( " | ", " \u2228 ", " | ",
-            Direction2D.BAS, Direction2D.BAS ),
+            Direction2D.HAUT, Direction2D.BAS ),
     HAUT_GAUCHE( " | ", "-< ", "   ",
-            Direction2D.BAS, Direction2D.GAUCHE ),
-    DROITE_BAS( "   ", " \u2228-", " | ",
-            Direction2D.GAUCHE, Direction2D.BAS ),
-    DROITE_GAUCHE( "   ", "-<-", "   ",
-            Direction2D.GAUCHE, Direction2D.GAUCHE ),
-    DROITE_HAUT( " | ", " \u2227-", "   ",
-            Direction2D.GAUCHE, Direction2D.HAUT ),
-    BAS_GAUCHE( "   ", "-< ", " | ",
             Direction2D.HAUT, Direction2D.GAUCHE ),
-    BAS_HAUT( " | ", " \u2227 ", " | ",
-            Direction2D.HAUT, Direction2D.HAUT ),
-    BAS_DROITE( "   ", " >-", " | ",
-            Direction2D.HAUT, Direction2D.DROITE ),
-    GAUCHE_HAUT( " | ", "-\u2227 ", "   ",
-            Direction2D.DROITE, Direction2D.HAUT ),
-    GAUCHE_DROITE( "   ", "->-", "   ",
-            Direction2D.DROITE, Direction2D.DROITE ),
-    GAUCHE_BAS( "   ", "-\u2228 ", " | ",
+    DROITE_BAS( "   ", " \u2228-", " | ",
             Direction2D.DROITE, Direction2D.BAS ),
+    DROITE_GAUCHE( "   ", "-<-", "   ",
+            Direction2D.DROITE, Direction2D.GAUCHE ),
+    DROITE_HAUT( " | ", " \u2227-", "   ",
+            Direction2D.DROITE, Direction2D.HAUT ),
+    BAS_GAUCHE( "   ", "-< ", " | ",
+            Direction2D.BAS, Direction2D.GAUCHE ),
+    BAS_HAUT( " | ", " \u2227 ", " | ",
+            Direction2D.BAS, Direction2D.HAUT ),
+    BAS_DROITE( "   ", " >-", " | ",
+            Direction2D.BAS, Direction2D.DROITE ),
+    GAUCHE_HAUT( " | ", "-\u2227 ", "   ",
+            Direction2D.GAUCHE, Direction2D.HAUT ),
+    GAUCHE_DROITE( "   ", "->-", "   ",
+            Direction2D.GAUCHE, Direction2D.DROITE ),
+    GAUCHE_BAS( "   ", "-\u2228 ", " | ",
+            Direction2D.GAUCHE, Direction2D.BAS ),
     ;
     private String afficheHaut;
     private String afficheMilieu;
@@ -178,4 +179,6 @@ public enum TapisRoulant {
 
         return resultat;
     }
+
+
 }

@@ -430,6 +430,7 @@ public class Logistique {
      * @return La chaine de caractères représentant la ligne de la matrice.
      */
     private String toStringLigne( TapisRoulant[] ligne ) {
+
         return
                 toStringTier( ligne, TapisRoulant::afficheHaut ) +
                 toStringTier( ligne, TapisRoulant::afficheMilieu ) +

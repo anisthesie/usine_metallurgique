@@ -29,7 +29,6 @@ public abstract class Direction2D implements Axe, Comparator<Produit> {
     public static final Direction2D BAS = new Bas();
     public static final Direction2D GAUCHE = new Gauche();
 
-
     /**
      * variable décrivant le déplacement selon l'axe des 'x'.
      */

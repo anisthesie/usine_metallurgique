@@ -6,17 +6,20 @@ import usine.TapisRoulant;
 import usine.Usine;
 import usine.geometrie.Geometrie;
 import usine.geometrie.Position;
+import usine.geometrie.directions.Direction2D;
 import usine.stations.Mine;
 import usine.stations.Station;
 import usine.stations.Vendeur;
 import usine.stations.machines.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Main {
 
-    public static int DELAY = 1000;
-
     public static void main(String[] args) {
-        Usine usine = new Usine(10, 5);
+        Usine usine = new Usine(20, 5);
         boolean marche = true;
 
         while (marche) {
@@ -69,21 +72,21 @@ public class Main {
                         second_choix = Parser.getInt(1, 5);
                         break;
                     case 3:
+
+                        List<Command> commandesAcceptes = new ArrayList<>(Arrays.asList(Command.HAUT, Command.BAS, Command.GAUCHE, Command.DROITE));
+
                         System.out.println();
-                        System.out.println("1. Tapis roulant haut-droite");
-                        System.out.println("2. Tapis roulant haut-gauche");
-                        System.out.println("3. Tapis roulant haut-bas");
-                        System.out.println("4. Tapis roulant bas-droite");
-                        System.out.println("5. Tapis roulant bas-gauche");
-                        System.out.println("6. Tapis roulant bas-haut");
-                        System.out.println("7. Tapis roulant gauche-droite");
-                        System.out.println("8. Tapis roulant gauche-haut");
-                        System.out.println("9. Tapis roulant gauche-bas");
-                        System.out.println("10. Tapis roulant droite-gauche");
-                        System.out.println("11. Tapis roulant droite-haut");
-                        System.out.println("12. Tapis roulant droite-bas");
-                        System.out.println("Entrez le type de tapis roulant :");
-                        second_choix = Parser.getInt(1, 12);
+                        System.out.println("Taper la direction du premier segment");
+                        Command commandeSegment1 = Parser.getCommand(commandesAcceptes);
+
+                        commandesAcceptes.remove(commandeSegment1);
+
+                        System.out.println("Taper la direction du deuxième segment");
+                        Command commandeSegment2 = Parser.getCommand(commandesAcceptes);
+
+                        Direction2D segment1 = Parser.commandToDirection(commandeSegment1);
+                        Direction2D segment2 = Parser.commandToDirection(commandeSegment2);
+                        tapis = TapisRoulant.trouver(segment1, segment2);
                         break;
                 }
 
@@ -107,7 +110,7 @@ public class Main {
 
                     boolean success = false;
 
-                    while(!success) {
+                    while (!success) {
                         try {
                             station.placer(x, y, usine);
                             success = true;
@@ -122,16 +125,13 @@ public class Main {
 
 
                 } else {
-                    tapis = TapisRoulant.BAS_DROITE;
-                    System.out.println("Tapis roulant placé dans la position : " + numCase);
-                    // usine.placerTapisRoulant(tapis, numCase);
+                    usine.getLogistique().setTapis(x, y, tapis);
                 }
 
 
             }
 
             usine.tic();
-            delay(DELAY);
         }
     }
 
@@ -165,14 +165,6 @@ public class Main {
         }
         return null;
 
-    }
-
-    public static void delay(int delay) {
-        try {
-            Thread.sleep(delay);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
 }

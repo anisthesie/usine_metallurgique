@@ -2,16 +2,64 @@ package input;
 
 import usine.Usine;
 import usine.geometrie.Geometrie;
+import usine.geometrie.directions.Direction2D;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class Parser {
 
     public static Command getCommand() {
         return Command.parseCommand(getString());
+    }
+
+    public static Direction2D commandToDirection(Command command) {
+        switch (command) {
+            case HAUT:
+                return Direction2D.HAUT;
+            case BAS:
+                return Direction2D.BAS;
+            case GAUCHE:
+                return Direction2D.GAUCHE;
+            case DROITE:
+                return Direction2D.DROITE;
+            default:
+                return null;
+        }
+    }
+
+    public static Command getCommand(List<Command> acceptedCommands) {
+
+        afficherCommandes(acceptedCommands);
+
+        Command command = getCommand();
+        while (!isValid(command, acceptedCommands)) {
+            System.out.println("Commande invalide.");
+            afficherCommandes(acceptedCommands);
+            command = getCommand();
+        }
+        return command;
+    }
+
+    public static void afficherCommandes(List<Command> acceptedCommands) {
+        System.out.print("(");
+        for (int i = 0; i < acceptedCommands.size(); i++) {
+            System.out.print(acceptedCommands.get(i).toString());
+            if (i < acceptedCommands.size() - 1)
+                System.out.print(", ");
+        }
+        System.out.print(") : ");
+    }
+
+    public static boolean isValid(Command command, List<Command> acceptedCommands) {
+        for (Command acceptedCommand : acceptedCommands) {
+            if (command == acceptedCommand)
+                return true;
+        }
+        return false;
     }
 
     public static int getCaseNumber(Usine usine) {

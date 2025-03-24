@@ -14,6 +14,8 @@ public class Usine {
 
     protected boolean afficherIndex;
 
+    private List<String> notifications;
+
     // contient les tapis Roulants.
     protected Logistique logistique;
     // contient les stations de l'usine.
@@ -27,6 +29,7 @@ public class Usine {
         logistique = new Logistique(tailleX, tailleY);
         stations = new ArrayList<>();
         this.cases = new Case[tailleX][tailleY];
+        this.notifications = new ArrayList<>();
         initCases();
     }
 
@@ -55,9 +58,7 @@ public class Usine {
     }
 
     public void afficher() {
-        Parser.clearScreen();
-
-        for (int y = 0; y < tailleY; ++y) {
+      /*  for (int y = 0; y < tailleY; ++y) {
             for (int x = 0; x < tailleX; ++x) {
 
                 Case courante = cases[x][y];
@@ -74,6 +75,21 @@ public class Usine {
             }
             System.out.println();
         }
+
+        */
+
+
+        Parser.clearScreen();
+        System.out.println(logistique.toString());
+
+        if (!notifications.isEmpty())
+            System.out.println("Notifications: ");
+        for (String notification : notifications)
+            System.out.println("\t" + notification);
+        notifications.clear();
+
+        System.out.println();
+
 
     }
 
@@ -126,5 +142,9 @@ public class Usine {
 
     public void setAfficherIndex(boolean afficherIndex) {
         this.afficherIndex = afficherIndex;
+    }
+
+    public void ajouterNotification(String notification) {
+        notifications.add(notification);
     }
 }
