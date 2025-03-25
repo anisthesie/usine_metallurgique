@@ -45,8 +45,8 @@ public class FournaiseDeCoupellation extends Machine {
             throw new PlacementIncorrectException("Impossible de placer l'élement dans la case (" + Geometrie.cartesienVersLineaire(x, y, parent.getTailleX()) + ")");
 
         parent.ajouterStation(this);
-        this.position.setX(x);
-        this.position.setY(y);
+        this.setX(x);
+        this.setY(y);
 
         for(Case entree : entrees) {
             entree.setStation(this);

@@ -278,7 +278,7 @@ public class Logistique {
      */
     public void placerItem(int x, int y, Produit produit) {
         if (grille[y][x].getTapis() == TapisRoulant.VIDE || grille[y][x].getTapis() == TapisRoulant.OCCUPE) {
-            throw new PlacementIncorrectException();
+            throw new PlacementIncorrectException("Il n'y a pas de tapis roulant à la position indiqué.");
         }
 
         for (Produit i : produits) {
@@ -286,7 +286,7 @@ public class Logistique {
                     &&
                     (presqueEntier.test(i.getX()) || presqueEntier.test(i.getY()))
             ) {
-                throw new PlacementIncorrectException();
+                throw new PlacementIncorrectException("Il y a déjà un item à cette position.");
             }
         }
 

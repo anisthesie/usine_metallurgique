@@ -40,29 +40,44 @@ public class Mine extends Station {
             case CHARBON:
                 if (compteur == 1) {
                     try {
-                        parent.getLogistique().placerItem(this.position.getX() + 1, this.position.getY(), new Produit(IdentiteProduit.CHARBON));
+                        parent.getLogistique().placerItem(this.getX() + 1, this.getY(), new Produit(IdentiteProduit.CHARBON));
                     } catch (PlacementIncorrectException e) {
                         parent.ajouterNotification(
-                                "L'usine de charbon en (" + this.position.getX() + "," + this.position.getY() + ") a construit un objet mais n'a pas trouvé de tapis roulant à sa droite.");
+                                "La mine de charbon en (" + this.getX() + "," + this.getY() + ") : " + e.getMessage());
                     }
                     compteur = 0;
                 }
                 break;
             case ACANTHITE:
                 if (compteur == 2) {
-                    //parent.ajouterProduit(IdentiteProduit.ACANTHITE);
+                    try {
+                        parent.getLogistique().placerItem(this.getX() + 1, this.getY(), new Produit(IdentiteProduit.ACANTHITE));
+                    } catch (PlacementIncorrectException e) {
+                        parent.ajouterNotification(
+                                "La mine d'Acanthite en (" + this.getX() + "," + this.getY() + ") : " + e.getMessage());
+                    }
                     compteur = 0;
                 }
                 break;
             case CASSITERITE:
                 if (compteur == 7) {
-                    //parent.ajouterProduit(IdentiteProduit.CASSITERITE);
+                    try {
+                        parent.getLogistique().placerItem(this.getX() + 1, this.getY(), new Produit(IdentiteProduit.CASSITERITE));
+                    } catch (PlacementIncorrectException e) {
+                        parent.ajouterNotification(
+                                "La mine de Cassiterite en (" + this.getX() + "," + this.getY() + ") : " + e.getMessage());
+                    }
                     compteur = 0;
                 }
                 break;
             case CHALCOCITE:
                 if (compteur == 3) {
-                    //parent.ajouterProduit(IdentiteProduit.CHALCOCITE);
+                    try {
+                        parent.getLogistique().placerItem(this.getX() + 1, this.getY(), new Produit(IdentiteProduit.CHALCOCITE));
+                    } catch (PlacementIncorrectException e) {
+                        parent.ajouterNotification(
+                                "La mine de Chalcocite en (" + this.getX() + "," + this.getY() + ") : " + e.getMessage());
+                    }
                     compteur = 0;
                 }
                 break;
@@ -79,8 +94,8 @@ public class Mine extends Station {
 
         parent.ajouterStation(this);
 
-        this.position.setX(x);
-        this.position.setY(y);
+        this.setX(x);
+        this.setY(y);
 
         for (Case c : cases) {
             c.setStation(this);

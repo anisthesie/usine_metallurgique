@@ -3,17 +3,20 @@ package usine.stations;
 import usine.Case;
 import usine.PlacementIncorrectException;
 import usine.Usine;
-import usine.geometrie.Position;
 
 public abstract class Station {
-    protected Position position;
+
+    protected int x;
+    protected int y;
 
     public Station(int positionX, int positionY) {
-        this.position = new Position(positionX, positionY);
+        this.x = positionX;
+        this.y = positionY;
     }
 
     public Station() {
-        this.position = new Position(-1, -1);
+        this.x = -1;
+        this.y = -1;
     }
 
     /**
@@ -28,10 +31,6 @@ public abstract class Station {
             throws PlacementIncorrectException;
 
 
-    public boolean isPlaced() {
-        return position.getX() != -1 && position.getY() != -1;
-    }
-
     public boolean areCasesValid(Case... cases) {
         for (Case c : cases)
             if (c == null || c.isOccupe())
@@ -42,5 +41,21 @@ public abstract class Station {
 
     public String getSymbole() {
         return "S";
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }

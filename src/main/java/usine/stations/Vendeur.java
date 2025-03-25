@@ -2,6 +2,7 @@ package usine.stations;
 
 import usine.Case;
 import usine.PlacementIncorrectException;
+import usine.TapisRoulant;
 import usine.Usine;
 import usine.geometrie.Geometrie;
 
@@ -23,27 +24,28 @@ public class Vendeur extends Station {
     @Override
     public void tic(Usine parent) {
 
+        //if(parent.getLogistique().contiensItem(x - 1, y))
+
     }
 
     @Override
     public void placer(int x, int y, Usine parent) throws PlacementIncorrectException {
-        Case case1 = parent.getCase(x - 1, y);
-        Case case2 = parent.getCase(x, y);
+        Case[] cases = {parent.getCase(x, y)};
 
-        if(!this.areCasesValid(case1, case2))
+        if (!this.areCasesValid(cases))
             throw new PlacementIncorrectException("Impossible de placer l'élement dans la case (" + Geometrie.cartesienVersLineaire(x, y, parent.getTailleX()) + ")");
 
 
         parent.ajouterStation(this);
 
-        this.position.setX(x);
-        this.position.setY(y);
+        this.setX(x);
+        this.setY(y);
 
-        case1.setStation(this);
-        case2.setStation(this);
-
-        case1.setSymbole("-->");
-        case2.setSymbole(getSymbole());
+        for (Case c : cases) {
+            c.setStation(this);
+            c.setSymbole(getSymbole());
+            parent.getLogistique().setTapis(c.getX(), c.getY(), TapisRoulant.OCCUPE);
+        }
     }
 
     @Override

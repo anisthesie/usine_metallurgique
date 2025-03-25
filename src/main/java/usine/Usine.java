@@ -1,12 +1,12 @@
 package usine;
 
 import input.Parser;
-import usine.geometrie.Geometrie;
-import usine.geometrie.Position;
 import usine.stations.Station;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Usine {
 
@@ -24,8 +24,11 @@ public class Usine {
     protected Case[][] cases;
     // contient les stations
     protected List<Station> stations;
+    // lie les produits avec leur nombre de ventes
+    protected Map<IdentiteProduit, Integer> ventes;
 
     public Usine(int tailleX, int tailleY) {
+        ventes = new HashMap<IdentiteProduit, Integer>();
         this.tailleX = tailleX;
         this.tailleY = tailleY;
         stations = new ArrayList<>();
@@ -52,7 +55,6 @@ public class Usine {
     }
 
     public void tic() {
-
         logistique.tic();
         for (Station station : stations) {
             station.tic(this);
@@ -92,7 +94,20 @@ public class Usine {
     }
 
     public int getVente(IdentiteProduit idProduit) {
+        if (ventes.containsKey(idProduit))
+            return ventes.get(idProduit);
         return 0;
+    }
+
+    public void incrementerVente(IdentiteProduit idProduit) {
+
+        if (ventes.containsKey(idProduit)) {
+            int nbVentes = ventes.get(idProduit);
+            ventes.remove(idProduit);
+            ventes.put(idProduit, nbVentes + 1);
+        } else
+            ventes.put(idProduit, 1);
+
     }
 
     private void initCases() {

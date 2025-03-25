@@ -6,8 +6,8 @@ public class Geometrie {
         return y * tailleX + x;
     }
 
-    public static Position lineaireVersCartesien(int indexLineaire, int tailleX) {
-        return new Position(indexLineaire % tailleX, indexLineaire / tailleX);
+    public static int[] lineaireVersCartesien(int indexLineaire, int tailleX) {
+        return new int[]{indexLineaire % tailleX, indexLineaire / tailleX};
     }
 
 

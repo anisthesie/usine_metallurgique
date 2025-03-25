@@ -5,7 +5,6 @@ import usine.PlacementIncorrectException;
 import usine.TapisRoulant;
 import usine.Usine;
 import usine.geometrie.Geometrie;
-import usine.geometrie.Position;
 import usine.geometrie.directions.Direction2D;
 import usine.stations.Mine;
 import usine.stations.Station;
@@ -101,9 +100,9 @@ public class Main {
 
                 Usine.AFFICHER_INDEX = false;
 
-                Position position = Geometrie.lineaireVersCartesien(numCase, usine.getTailleX());
-                int x = position.getX();
-                int y = position.getY();
+                int[] position = Geometrie.lineaireVersCartesien(numCase, usine.getTailleX());
+                int x = position[0];
+                int y = position[1];
 
                 if (premier_choix == 1 || premier_choix == 2) {
                     station = createStation(premier_choix, second_choix);
@@ -118,8 +117,8 @@ public class Main {
                             System.out.println(e.getMessage());
                             numCase = Parser.getCaseNumber(usine);
                             position = Geometrie.lineaireVersCartesien(numCase, usine.getTailleX());
-                            x = position.getX();
-                            y = position.getY();
+                            x = position[0];
+                            y = position[1];
                         }
                     }
 
