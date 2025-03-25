@@ -28,7 +28,7 @@ public class Usine {
     public Usine(int tailleX, int tailleY) {
         this.tailleX = tailleX;
         this.tailleY = tailleY;
-        logistique = new Logistique(tailleX, tailleY);
+        logistique = new Logistique(tailleX, tailleY, this);
         stations = new ArrayList<>();
         this.cases = new Case[tailleX][tailleY];
         this.notifications = new ArrayList<>();

@@ -78,9 +78,6 @@ public enum TapisRoulant {
     }
 
     public String afficheMilieu() {
-        if (this == VIDE && Usine.AFFICHER_INDEX)
-            return String.valueOf(Geometrie.cartesienVersLineaire(x, y, tailleX));
-
         return afficheMilieu;
     }
 

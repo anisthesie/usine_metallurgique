@@ -15,6 +15,10 @@ public class Case {
 
     private TapisRoulant tapis;
 
+    public Case(int x, int y, Usine usine) {
+        this(x, y, usine, TapisRoulant.VIDE);
+    }
+
     public Case(int x, int y, Usine usine, TapisRoulant tapis) {
         this.x = x;
         this.y = y;
@@ -62,4 +66,25 @@ public class Case {
     public void setTapis(TapisRoulant tapis) {
         this.tapis = tapis;
     }
+
+    public String afficheHaut() {
+        return tapis.afficheHaut();
+    }
+
+    public String afficheMilieu() {
+        if (this.tapis == TapisRoulant.VIDE && Usine.AFFICHER_INDEX) {
+            StringBuilder retour = new StringBuilder(String.valueOf(indexLineaire));
+            int indentationRelative = 3 - retour.length();
+            for (int i = 0; i < indentationRelative; i++)
+                retour.append(" ");
+
+            return retour.toString();
+        }
+        return tapis.afficheMilieu();
+    }
+
+    public String afficheBas() {
+        return tapis.afficheBas();
+    }
+
 }

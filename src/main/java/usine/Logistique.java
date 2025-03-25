@@ -32,9 +32,8 @@ public class Logistique {
      * <p>
      * Exemple : grille[y][x]
      */
-    protected TapisRoulant[][] grille;
+    protected Case[][] grille;
     protected List<Produit> produits;
-    //protected Case[][] cases;
 
     /**
      * Indique le nombre de case que contiens une ligne de la matrice.
@@ -56,18 +55,17 @@ public class Logistique {
      * @param tailleX Contiens le nombre de colonne de la matrice.  Doit être plus grand que 0.
      * @param tailleY Contiens le nombre de lignes de la matrice.  Doit être plus grand que 0.
      */
-    public Logistique(int tailleX, int tailleY) {
+    public Logistique(int tailleX, int tailleY, Usine usine) {
         assert 0 < tailleX;
         assert 0 < tailleY;
 
         this.tailleX = tailleX;
         this.tailleY = tailleY;
-        this.grille = new TapisRoulant[tailleY][tailleX];
+        this.grille = new Case[tailleY][tailleX];
 
         for (int y = 0; y < tailleY; ++y) {
             for (int x = 0; x < tailleX; ++x) {
-                grille[y][x] = TapisRoulant.VIDE;
-                grille[y][x].setPosition(x, y, tailleX);
+                grille[y][x] = new Case(x, y, usine);
             }
         }
 
@@ -87,11 +85,11 @@ public class Logistique {
      * @throws IndexOutOfBoundsException Lancé si 'x' ou 'y' ne sont pas à l'intérieur de la grille.
      */
     public void setTapis(int x, int y, TapisRoulant type) {
-        grille[y][x] = type;
+        grille[y][x].setTapis(type);
     }
 
     private void setPremierTapis(int x, int y, TapisRoulant type) {
-        TapisRoulant courant = grille[y][x];
+        TapisRoulant courant = grille[y][x].getTapis();
 
         if (courant != TapisRoulant.VIDE) {
             type = courant.combine(type);
@@ -101,7 +99,7 @@ public class Logistique {
     }
 
     private void setDernierTapis(int x, int y, TapisRoulant type) {
-        TapisRoulant courant = grille[y][x];
+        TapisRoulant courant = grille[y][x].getTapis();
 
         if (TapisRoulant.VIDE != courant) {
             type = type.combine(courant);
@@ -120,7 +118,7 @@ public class Logistique {
      * @throws IndexOutOfBoundsException Lancé si 'x' ou 'y' ne sont pas à l'intérieur de la grille.
      */
     public TapisRoulant getTapis(int x, int y) {
-        return grille[y][x];
+        return grille[y][x].getTapis();
     }
 
     /**
@@ -135,12 +133,12 @@ public class Logistique {
      */
     public boolean caseValideFin(int x, int y) {
         boolean resultat = false;
-        Direction2D avant = grille[y][x].dirSegment1();
+        Direction2D avant = grille[y][x].getTapis().dirSegment1();
         try {
-            resultat = (TapisRoulant.OCCUPE != grille[y][x]) && (
-                    (TapisRoulant.VIDE == grille[y][x])
+            resultat = (TapisRoulant.OCCUPE != grille[y][x].getTapis()) && (
+                    (TapisRoulant.VIDE == grille[y][x].getTapis())
                             ||
-                            grille[y - avant.deltaY][x - avant.deltaX].dirSegment2() != avant);
+                            grille[y - avant.deltaY][x - avant.deltaX].getTapis().dirSegment2() != avant);
         } catch (IndexOutOfBoundsException e) {
             resultat = true;
         }
@@ -160,14 +158,14 @@ public class Logistique {
      */
     public boolean caseValideDebut(int x, int y) {
         boolean resultat = false;
-        Direction2D apres = grille[y][x].dirSegment2();
+        Direction2D apres = grille[y][x].getTapis().dirSegment2();
 
         try {
-            resultat = (TapisRoulant.OCCUPE != grille[y][x]) && (
-                    (TapisRoulant.VIDE == grille[y][x])
+            resultat = (TapisRoulant.OCCUPE != grille[y][x].getTapis()) && (
+                    (TapisRoulant.VIDE == grille[y][x].getTapis())
                             ||
                             grille[y + apres.deltaY][x + apres.deltaX]
-                                    .dirSegment1() != apres);
+                                    .getTapis().dirSegment1() != apres);
         } catch (IndexOutOfBoundsException e) {
             resultat = true;
         }
@@ -285,7 +283,7 @@ public class Logistique {
      * @throws PlacementIncorrectException Lancé s'il n'y a pas de tapis roulant à la position indiqué.
      */
     public void placerItem(int x, int y, Produit produit) {
-        if (grille[y][x] == TapisRoulant.VIDE || grille[y][x] == TapisRoulant.OCCUPE) {
+        if (grille[y][x].getTapis() == TapisRoulant.VIDE || grille[y][x].getTapis() == TapisRoulant.OCCUPE) {
             throw new PlacementIncorrectException();
         }
 
@@ -391,13 +389,13 @@ public class Logistique {
     private void ticItem(Produit i) {
         int positionX = (int) Math.round(i.getX());
         int positionY = (int) Math.round(i.getY());
-        TapisRoulant courant = grille[positionY][positionX];
+        TapisRoulant courant = grille[positionY][positionX].getTapis();
 
         double reste = courant.avancer(i, DISTANCE_BASE, positionX, positionY);
         if (0.0 < reste) {
             Direction2D dirCourant = courant.dirSegment2();
             try {
-                TapisRoulant suivant = grille[positionY + dirCourant.deltaY][positionX + dirCourant.deltaX];
+                TapisRoulant suivant = grille[positionY + dirCourant.deltaY][positionX + dirCourant.deltaX].getTapis();
                 Direction2D dirSuivant = suivant.dirSegment1();
 
                 if (dirCourant == dirSuivant) {
@@ -427,7 +425,7 @@ public class Logistique {
      * @param m     La fonction d'extraction pour trouver les caractères qui affiche le tapis roulant.
      * @return La chaine de caractères représentant la ligne de la matrice.
      */
-    private String toStringTier(TapisRoulant[] ligne, Function<TapisRoulant, String> m) {
+    private String toStringTier(Case[] ligne, Function<Case, String> m) {
         return Arrays.stream(ligne)
                 .map(m)
                 .collect(Collectors.joining(SEP_CHAR, SEP_CHAR, SEP_CHAR + "\n"));
@@ -439,12 +437,12 @@ public class Logistique {
      * @param ligne La ligne à afficher
      * @return La chaine de caractères représentant la ligne de la matrice.
      */
-    private String toStringLigne(TapisRoulant[] ligne) {
+    private String toStringLigne(Case[] ligne) {
 
         return
-                toStringTier(ligne, TapisRoulant::afficheHaut) +
-                        toStringTier(ligne, TapisRoulant::afficheMilieu) +
-                        toStringTier(ligne, TapisRoulant::afficheBas);
+                toStringTier(ligne, Case::afficheHaut) +
+                        toStringTier(ligne, Case::afficheMilieu) +
+                        toStringTier(ligne, Case::afficheBas);
     }
 
     /**
@@ -456,7 +454,7 @@ public class Logistique {
     public String toString() {
         return
                 Arrays.stream(grille)
-                        .map(this::toStringLigne)
+                        .map(t -> toStringLigne(t))
                         .collect(Collectors.joining(fix, fix, fix));
     }
 }
