@@ -61,13 +61,7 @@ public class Logistique {
 
         this.tailleX = tailleX;
         this.tailleY = tailleY;
-        this.grille = new Case[tailleY][tailleX];
-
-        for (int y = 0; y < tailleY; ++y) {
-            for (int x = 0; x < tailleX; ++x) {
-                grille[y][x] = new Case(x, y, usine);
-            }
-        }
+        this.grille = usine.getCases();
 
         fix = Stream.generate(() -> SEP_CHAR)
                 .limit(4 * tailleX + 1)

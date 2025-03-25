@@ -28,11 +28,11 @@ public class Usine {
     public Usine(int tailleX, int tailleY) {
         this.tailleX = tailleX;
         this.tailleY = tailleY;
-        logistique = new Logistique(tailleX, tailleY, this);
         stations = new ArrayList<>();
-        this.cases = new Case[tailleX][tailleY];
+        this.cases = new Case[tailleY][tailleX];
         this.notifications = new ArrayList<>();
         initCases();
+        logistique = new Logistique(tailleX, tailleY, this);
     }
 
     public void setTapisHorizontal(int y, int x1, int x2) {
@@ -96,9 +96,9 @@ public class Usine {
     }
 
     private void initCases() {
-        for (int x = 0; x < tailleX; x++) {
-            for (int y = 0; y < tailleY; y++) {
-                cases[x][y] = new Case(x, y, this);
+        for (int y = 0; y < tailleY; ++y) {
+            for (int x = 0; x < tailleX; ++x) {
+                cases[y][x] = new Case(x, y, this);
             }
         }
     }
@@ -106,12 +106,7 @@ public class Usine {
     public Case getCase(int x, int y) {
         if (x < 0 || x >= tailleX || y < 0 || y >= tailleY)
             return null;
-        return cases[x][y];
-    }
-
-    public Case getCase(int indexLineaire) {
-        Position position = Geometrie.lineaireVersCartesien(indexLineaire, tailleX);
-        return getCase(position.getX(), position.getY());
+        return cases[y][x];
     }
 
     public Case[][] getCases() {

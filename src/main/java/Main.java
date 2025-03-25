@@ -127,8 +127,6 @@ public class Main {
                 } else {
                     usine.getLogistique().setTapis(x, y, tapis);
                 }
-
-
             }
 
             usine.tic();

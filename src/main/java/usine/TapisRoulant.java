@@ -25,7 +25,7 @@ public enum TapisRoulant {
 
     VIDE("   ", " . ", "   ",
             null, null),
-    OCCUPE("xxx", "x.x", "xxx",
+    OCCUPE("---", "x.x", "---",
             null, null),
     HAUT_DROITE(" | ", " >-", "   ",
             Direction2D.HAUT, Direction2D.DROITE),

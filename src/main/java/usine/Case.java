@@ -48,7 +48,11 @@ public class Case {
     }
 
     public boolean isOccupe() {
-        return station != null || usine.getLogistique().getTapis(x, y) != TapisRoulant.VIDE || usine.getLogistique().getTapis(x, y) == TapisRoulant.OCCUPE;
+        return station != null || tapis != TapisRoulant.VIDE || tapis == TapisRoulant.OCCUPE;
+    }
+
+    public boolean hasStation() {
+        return station != null;
     }
 
     public int getX() {
@@ -72,14 +76,24 @@ public class Case {
     }
 
     public String afficheMilieu() {
+        int t = 0;
         if (this.tapis == TapisRoulant.VIDE && Usine.AFFICHER_INDEX) {
             StringBuilder retour = new StringBuilder(String.valueOf(indexLineaire));
             int indentationRelative = 3 - retour.length();
             for (int i = 0; i < indentationRelative; i++)
                 retour.append(" ");
 
+            t++;
             return retour.toString();
         }
+        t++;
+
+        if (hasStation()) {
+            t++;
+            return station.getSymbole();
+        }
+
+        t++;
         return tapis.afficheMilieu();
     }
 
