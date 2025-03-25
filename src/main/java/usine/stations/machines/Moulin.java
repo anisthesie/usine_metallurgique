@@ -1,9 +1,6 @@
 package usine.stations.machines;
 
-import usine.Case;
-import usine.PlacementIncorrectException;
-import usine.TapisRoulant;
-import usine.Usine;
+import usine.*;
 import usine.geometrie.Geometrie;
 
 public class Moulin extends Machine {
@@ -14,6 +11,10 @@ public class Moulin extends Machine {
     // O( x+1, y ) : deuxième case occupé par le Moulin
     // e( x-1, y ) : Case où le Moulin prend ses entrées.
     // s( x+2, y ) : Case où le Moulin place les sorties.
+
+
+    private int compteur = 0;
+    private IdentiteProduit produitEnCours = null;
 
     /**
      * Construit un Moulin
@@ -32,6 +33,87 @@ public class Moulin extends Machine {
     @Override
     public void tic(Usine parent) {
 
+        int xentree = this.getX() - 1;
+        int yentree = this.getY();
+
+        int xsortie = this.getX() + 2;
+        int ysortie = this.getY();
+
+        traiterEntree(parent, xentree, yentree);
+
+        if (produitEnCours != null)
+            travailler(parent, xsortie, ysortie);
+
+    }
+
+    private void travailler(Usine parent, int xsortie, int ysortie) {
+
+        switch (produitEnCours) {
+            case ACANTHITE:
+                if (compteur == 3) {
+                    try {
+                        parent.getLogistique().placerItem(xsortie, ysortie, new Produit(IdentiteProduit.POUDRE_ACANTHITE));
+                    } catch (PlacementIncorrectException e) {
+                        parent.ajouterNotification(
+                                "Le moulin en (" + this.getX() + "," + this.getY() + ") : " + e.getMessage());
+                    }
+
+                    parent.ajouterNotification("Le moulin en (" + this.getX() + "," + this.getY() + ") a produit : " + IdentiteProduit.POUDRE_ACANTHITE.getNom() + " !");
+                    produitEnCours = null;
+                    compteur = 0;
+                }
+                break;
+            case CASSITERITE:
+                if (compteur == 7) {
+                    try {
+                        parent.getLogistique().placerItem(xsortie, ysortie, new Produit(IdentiteProduit.POUDRE_CASSITERITE));
+                    } catch (PlacementIncorrectException e) {
+                        parent.ajouterNotification(
+                                "Le moulin en (" + this.getX() + "," + this.getY() + ") : " + e.getMessage());
+                    }
+                    parent.ajouterNotification("Le moulin en (" + this.getX() + "," + this.getY() + ") a produit : " + IdentiteProduit.POUDRE_CASSITERITE.getNom() + " !");
+                    produitEnCours = null;
+                    compteur = 0;
+                }
+                break;
+            case CHALCOCITE:
+                if (compteur == 3) {
+                    try {
+                        parent.getLogistique().placerItem(xsortie, ysortie, new Produit(IdentiteProduit.POUDRE_CHALCOCITE));
+                    } catch (PlacementIncorrectException e) {
+                        parent.ajouterNotification(
+                                "Le moulin en (" + this.getX() + "," + this.getY() + ") : " + e.getMessage());
+                    }
+                    parent.ajouterNotification("Le moulin en (" + this.getX() + "," + this.getY() + ") a produit : " + IdentiteProduit.POUDRE_CHALCOCITE.getNom() + " !");
+                    produitEnCours = null;
+                    compteur = 0;
+                }
+                break;
+        }
+        compteur++;
+    }
+
+    private void traiterEntree(Usine parent, int xentree, int yentree) {
+        if (parent.getLogistique().contiensItem(xentree, yentree)) {
+            Produit item = parent.getLogistique().trouverItem(xentree, yentree);
+
+            if (produitEnCours != null) {
+                parent.ajouterNotification("Le moulin en (" + this.getX() + "," + this.getY() + ") a reçu un produit alors qu'il est déjà en marche : " + item.getIdentite().getNom() + ".");
+                return;
+            }
+
+            if (item.getIdentite() != IdentiteProduit.ACANTHITE
+                    && item.getIdentite() != IdentiteProduit.CASSITERITE
+                    && item.getIdentite() != IdentiteProduit.CHALCOCITE) {
+                parent.ajouterNotification("Le moulin en (" + this.getX() + "," + this.getY() + ") a reçu un produit non traitable : " + item.getIdentite().getNom() + " ! Le produit a été détruit.");
+                parent.getLogistique().extraireItem(xentree, yentree);
+                return;
+            }
+
+            parent.ajouterNotification("Le moulin en (" + this.getX() + "," + this.getY() + ") a reçu un produit : " + item.getIdentite().getNom() + " !");
+            item = parent.getLogistique().extraireItem(xentree, yentree);
+            produitEnCours = item.getIdentite();
+        }
     }
 
     @Override
@@ -41,21 +123,14 @@ public class Moulin extends Machine {
                 parent.getCase(x + 1, y)
         };
 
-        Case[] entrees = {parent.getCase(x - 1, y)};
 
-        Case sortie = parent.getCase(x + 2, y);
-
-        if (!this.areCasesValid(cases) || !this.areCasesValid(entrees))
+        if (!this.areCasesValid(cases))
             throw new PlacementIncorrectException("Impossible de placer l'élement dans la case (" + Geometrie.cartesienVersLineaire(x, y, parent.getTailleX()) + ")");
 
         parent.ajouterStation(this);
         this.setX(x);
         this.setY(y);
 
-        for (Case entree : entrees) {
-            entree.setStation(this);
-            entree.setSymbole("B");
-        }
         for (Case c : cases) {
             parent.getLogistique().setTapis(c.getX(), c.getY(), TapisRoulant.OCCUPE);
 

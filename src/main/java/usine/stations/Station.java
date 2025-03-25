@@ -6,8 +6,8 @@ import usine.Usine;
 
 public abstract class Station {
 
-    protected int x;
-    protected int y;
+    private int x;
+    private int y;
 
     public Station(int positionX, int positionY) {
         this.x = positionX;
@@ -37,6 +37,10 @@ public abstract class Station {
                 return false;
 
         return true;
+    }
+
+    public boolean isPlaced() {
+        return x != -1 && y != -1;
     }
 
     public String getSymbole() {

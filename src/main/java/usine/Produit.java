@@ -31,6 +31,10 @@ public class Produit {
         this.y = y;
     }
 
+    public IdentiteProduit getIdentite() {
+        return identite;
+    }
+
     @Override
     public String toString() {
         return "Item{" +

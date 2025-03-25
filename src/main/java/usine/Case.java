@@ -76,24 +76,21 @@ public class Case {
     }
 
     public String afficheMilieu() {
-        int t = 0;
         if (this.tapis == TapisRoulant.VIDE && Usine.AFFICHER_INDEX) {
             StringBuilder retour = new StringBuilder(String.valueOf(indexLineaire));
             int indentationRelative = 3 - retour.length();
             for (int i = 0; i < indentationRelative; i++)
                 retour.append(" ");
 
-            t++;
+
             return retour.toString();
         }
-        t++;
 
-        if (hasStation()) {
-            t++;
+
+        if (hasStation())
             return station.getSymbole();
-        }
 
-        t++;
+
         return tapis.afficheMilieu();
     }
 

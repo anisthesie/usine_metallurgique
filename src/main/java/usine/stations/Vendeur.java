@@ -1,9 +1,6 @@
 package usine.stations;
 
-import usine.Case;
-import usine.PlacementIncorrectException;
-import usine.TapisRoulant;
-import usine.Usine;
+import usine.*;
 import usine.geometrie.Geometrie;
 
 public class Vendeur extends Station {
@@ -23,9 +20,11 @@ public class Vendeur extends Station {
 
     @Override
     public void tic(Usine parent) {
-
-        //if(parent.getLogistique().contiensItem(x - 1, y))
-
+        if (parent.getLogistique().contiensItem(this.getX() - 1, this.getY())) {
+            Produit produit = parent.getLogistique().extraireItem(this.getX() - 1, this.getY());
+            parent.incrementerVente(produit.getIdentite());
+            parent.ajouterNotification("Le vendeur en (" + this.getX() + "," + this.getY() + ") a vendu : " + produit.getIdentite().getNom() + " !");
+        }
     }
 
     @Override

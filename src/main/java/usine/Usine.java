@@ -57,7 +57,8 @@ public class Usine {
     public void tic() {
         logistique.tic();
         for (Station station : stations) {
-            station.tic(this);
+           if(station.isPlaced())
+               station.tic(this);
         }
     }
 
