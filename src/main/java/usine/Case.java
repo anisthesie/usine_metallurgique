@@ -13,17 +13,20 @@ public class Case {
     private int y;
     private int indexLineaire;
 
-    public Case(int x, int y, Usine usine) {
+    private TapisRoulant tapis;
+
+    public Case(int x, int y, Usine usine, TapisRoulant tapis) {
         this.x = x;
         this.y = y;
         this.usine = usine;
         this.indexLineaire = Geometrie.cartesienVersLineaire(x, y, usine.getTailleX());
         this.symbole = String.valueOf(indexLineaire);
         this.station = null;
+        this.tapis = tapis;
     }
 
     public String getSymbole() {
-        if (!isOccupe() && !usine.isAfficherIndex())
+        if (!isOccupe() && !Usine.AFFICHER_INDEX)
             return " ";
         return symbole;
     }
@@ -50,5 +53,13 @@ public class Case {
 
     public int getY() {
         return y;
+    }
+
+    public TapisRoulant getTapis() {
+        return tapis;
+    }
+
+    public void setTapis(TapisRoulant tapis) {
+        this.tapis = tapis;
     }
 }

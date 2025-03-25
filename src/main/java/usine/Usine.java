@@ -9,10 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Usine {
+
+    public static boolean AFFICHER_INDEX;
+
+
     protected int tailleX;
     protected int tailleY;
-
-    protected boolean afficherIndex;
 
     private List<String> notifications;
 
@@ -58,26 +60,6 @@ public class Usine {
     }
 
     public void afficher() {
-      /*  for (int y = 0; y < tailleY; ++y) {
-            for (int x = 0; x < tailleX; ++x) {
-
-                Case courante = cases[x][y];
-                String symbole = courante.getSymbole();
-
-                int indentationRelative = 3 - symbole.length();
-                if (x == 0) System.out.print("|");
-
-                for (int i = 0; i < indentationRelative; i++)
-                    System.out.print(" ");
-                System.out.print(symbole);
-                System.out.print(" | ");
-
-            }
-            System.out.println();
-        }
-
-        */
-
 
         Parser.clearScreen();
         System.out.println(logistique.toString());
@@ -134,14 +116,6 @@ public class Usine {
 
     public Case[][] getCases() {
         return cases;
-    }
-
-    public boolean isAfficherIndex() {
-        return afficherIndex;
-    }
-
-    public void setAfficherIndex(boolean afficherIndex) {
-        this.afficherIndex = afficherIndex;
     }
 
     public void ajouterNotification(String notification) {

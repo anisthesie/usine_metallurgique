@@ -90,7 +90,7 @@ public class Main {
                         break;
                 }
 
-                usine.setAfficherIndex(true);
+                Usine.AFFICHER_INDEX = true;
 
                 Parser.clearScreen();
                 usine.afficher();
@@ -99,7 +99,7 @@ public class Main {
 
                 int numCase = Parser.getCaseNumber(usine);
 
-                usine.setAfficherIndex(false);
+                Usine.AFFICHER_INDEX = false;
 
                 Position position = Geometrie.lineaireVersCartesien(numCase, usine.getTailleX());
                 int x = position.getX();
