@@ -1,9 +1,6 @@
 package usine.stations.machines;
 
-import usine.Case;
-import usine.PlacementIncorrectException;
-import usine.TapisRoulant;
-import usine.Usine;
+import usine.*;
 import usine.geometrie.Geometrie;
 
 public class Touraille extends Machine {
@@ -26,9 +23,54 @@ public class Touraille extends Machine {
         super();
     }
 
-    @Override
-    public void tic(Usine parent) {
 
+    @Override
+    protected void traiterEntree(Usine parent) {
+
+        int xentree = this.getX() - 1;
+        int yentree = this.getY();
+
+        if (parent.getLogistique().contiensItem(xentree, yentree)) {
+            Produit item = parent.getLogistique().trouverItem(xentree, yentree);
+
+            if (produitEnCours != null) {
+                parent.ajouterNotification("La touraille en (" + this.getX() + "," + this.getY() + ") a reçu un produit alors qu'elle est déjà en marche : " + item.getIdentite().getNom() + ".");
+                return;
+            }
+
+            if (item.getIdentite() != IdentiteProduit.CHARBON) {
+                parent.ajouterNotification("La touraille en (" + this.getX() + "," + this.getY() + ") a reçue un produit non traitable : " + item.getIdentite().getNom() + " ! Le produit a été détruit.");
+                parent.getLogistique().extraireItem(xentree, yentree);
+                return;
+            }
+
+            parent.ajouterNotification("La touraille en (" + this.getX() + "," + this.getY() + ") a reçu un produit : " + item.getIdentite().getNom() + " !");
+            parent.getLogistique().extraireItem(xentree, yentree);
+            produitEnCours = IdentiteProduit.COKE;
+        }
+
+    }
+
+
+    @Override
+    protected void travailler(Usine parent) {
+
+        int xsortie = this.getX() + 2;
+        int ysortie = this.getY() + 1;
+
+        if (compteur == 20) {
+            try {
+                parent.getLogistique().placerItem(xsortie, ysortie, new Produit(IdentiteProduit.COKE));
+            } catch (PlacementIncorrectException e) {
+                parent.ajouterNotification(
+                        "La touraille en (" + this.getX() + "," + this.getY() + ") : " + e.getMessage());
+            }
+
+            parent.ajouterNotification("La touraille en (" + this.getX() + "," + this.getY() + ") a produit : " + IdentiteProduit.COKE.getNom() + " !");
+            produitEnCours = null;
+            compteur = 0;
+        }
+        compteur++;
     }
 
     @Override
@@ -40,21 +82,14 @@ public class Touraille extends Machine {
                 parent.getCase(x + 1, y + 1)
         };
 
-        Case[] entrees = {parent.getCase(x - 1, y)};
 
-        Case sortie = parent.getCase(x + 2, y + 1);
-
-        if (!this.areCasesValid(cases) || !this.areCasesValid(entrees))
+        if (!this.areCasesValid(cases))
             throw new PlacementIncorrectException("Impossible de placer l'élement dans la case (" + Geometrie.cartesienVersLineaire(x, y, parent.getTailleX()) + ")");
 
         parent.ajouterStation(this);
         this.setX(x);
         this.setY(y);
 
-        for (Case entree : entrees) {
-            entree.setStation(this);
-            entree.setSymbole("B");
-        }
         for (Case c : cases) {
             parent.getLogistique().setTapis(c.getX(), c.getY(), TapisRoulant.OCCUPE);
 
