@@ -201,7 +201,7 @@ public class Logistique {
 
         for (int x = x1 + delta; x != x2; x = x + delta) {
             if (getTapis(x, y) != TapisRoulant.VIDE) {
-                throw new PlacementIncorrectException();
+                throw new PlacementIncorrectException("Une ou plusieurs cases sont occupées.");
             }
         }
 

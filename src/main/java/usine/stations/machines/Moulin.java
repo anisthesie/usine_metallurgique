@@ -12,10 +12,6 @@ public class Moulin extends Machine {
     // e( x-1, y ) : Case où le Moulin prend ses entrées.
     // s( x+2, y ) : Case où le Moulin place les sorties.
 
-
-    private int compteur = 0;
-    private IdentiteProduit produitEnCours = null;
-
     /**
      * Construit un Moulin
      *
@@ -31,22 +27,39 @@ public class Moulin extends Machine {
     }
 
     @Override
-    public void tic(Usine parent) {
+    protected void traiterEntree(Usine parent) {
 
         int xentree = this.getX() - 1;
         int yentree = this.getY();
 
-        int xsortie = this.getX() + 2;
-        int ysortie = this.getY();
+        if (parent.getLogistique().contiensItem(xentree, yentree)) {
+            Produit item = parent.getLogistique().trouverItem(xentree, yentree);
 
-        traiterEntree(parent, xentree, yentree);
+            if (produitEnCours != null) {
+                parent.ajouterNotification("Le moulin en (" + this.getX() + "," + this.getY() + ") a reçu un produit alors qu'il est déjà en marche : " + item.getIdentite().getNom() + ".");
+                return;
+            }
 
-        if (produitEnCours != null)
-            travailler(parent, xsortie, ysortie);
+            if (item.getIdentite() != IdentiteProduit.ACANTHITE
+                    && item.getIdentite() != IdentiteProduit.CASSITERITE
+                    && item.getIdentite() != IdentiteProduit.CHALCOCITE) {
+                parent.ajouterNotification("Le moulin en (" + this.getX() + "," + this.getY() + ") a reçu un produit non traitable : " + item.getIdentite().getNom() + " ! Le produit a été détruit.");
+                parent.getLogistique().extraireItem(xentree, yentree);
+                return;
+            }
 
+            parent.ajouterNotification("Le moulin en (" + this.getX() + "," + this.getY() + ") a reçu un produit : " + item.getIdentite().getNom() + " !");
+            item = parent.getLogistique().extraireItem(xentree, yentree);
+            produitEnCours = item.getIdentite();
+        }
     }
 
-    private void travailler(Usine parent, int xsortie, int ysortie) {
+
+    @Override
+    protected void travailler(Usine parent) {
+
+        int xsortie = this.getX() + 2;
+        int ysortie = this.getY();
 
         switch (produitEnCours) {
             case ACANTHITE:
@@ -93,28 +106,6 @@ public class Moulin extends Machine {
         compteur++;
     }
 
-    private void traiterEntree(Usine parent, int xentree, int yentree) {
-        if (parent.getLogistique().contiensItem(xentree, yentree)) {
-            Produit item = parent.getLogistique().trouverItem(xentree, yentree);
-
-            if (produitEnCours != null) {
-                parent.ajouterNotification("Le moulin en (" + this.getX() + "," + this.getY() + ") a reçu un produit alors qu'il est déjà en marche : " + item.getIdentite().getNom() + ".");
-                return;
-            }
-
-            if (item.getIdentite() != IdentiteProduit.ACANTHITE
-                    && item.getIdentite() != IdentiteProduit.CASSITERITE
-                    && item.getIdentite() != IdentiteProduit.CHALCOCITE) {
-                parent.ajouterNotification("Le moulin en (" + this.getX() + "," + this.getY() + ") a reçu un produit non traitable : " + item.getIdentite().getNom() + " ! Le produit a été détruit.");
-                parent.getLogistique().extraireItem(xentree, yentree);
-                return;
-            }
-
-            parent.ajouterNotification("Le moulin en (" + this.getX() + "," + this.getY() + ") a reçu un produit : " + item.getIdentite().getNom() + " !");
-            item = parent.getLogistique().extraireItem(xentree, yentree);
-            produitEnCours = item.getIdentite();
-        }
-    }
 
     @Override
     public void placer(int x, int y, Usine parent) throws PlacementIncorrectException {

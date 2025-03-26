@@ -1,6 +1,5 @@
 package usine;
 
-import usine.geometrie.Geometrie;
 import usine.geometrie.directions.Direction2D;
 
 /**

@@ -72,6 +72,47 @@ public class Main {
                         break;
                     case 3:
 
+                        // Code pour placer une chaine de tapis
+                        /*
+                        Usine.AFFICHER_INDEX = true;
+                        Parser.clearScreen();
+                        usine.afficher();
+
+                        int depart = Parser.getCaseNumber(usine, "Entrez le numéro de la case de départ : ");
+                        int arrivee = Parser.getCaseNumber(usine, "Entrez le numéro de la case d'arrivée : ");
+
+                        boolean erreur = false;
+
+                        int[] departXY = Geometrie.lineaireVersCartesien(depart, usine.getTailleX());
+                        int[] arriveeXY = Geometrie.lineaireVersCartesien(arrivee, usine.getTailleX());
+
+                        int x1 = departXY[0];
+                        int y1 = departXY[1];
+
+                        int x2 = arriveeXY[0];
+                        int y2 = arriveeXY[1];
+
+                        try {
+                            if (x1 != x2)
+                                usine.setTapisHorizontal(y1, Math.min(x1, x2), Math.max(x1, x2));
+
+                            if (y1 != y2)
+                                usine.setTapisVertical(x2, Math.min(y1, y2), Math.max(y1, y2));
+                        } catch (PlacementIncorrectException e) {
+                            erreur = true;
+                        }
+
+                        while (arrivee == depart || erreur) {
+                            System.out.println("La case de départ et d'arrivée ne peuvent pas être les mêmes.");
+                            arrivee = Parser.getCaseNumber(usine, "Entrez le numéro de la case d'arrivée : ");
+                        }
+
+                        Usine.AFFICHER_INDEX = false;
+                        */
+                        // Fin
+
+
+                        // Debut code pour placer les tapis roulants en une seule unité
                         List<Command> commandesAcceptes = new ArrayList<>(Arrays.asList(Command.HAUT, Command.BAS, Command.GAUCHE, Command.DROITE));
 
                         System.out.println();
@@ -86,25 +127,45 @@ public class Main {
                         Direction2D segment1 = Parser.commandToDirection(commandeSegment1);
                         Direction2D segment2 = Parser.commandToDirection(commandeSegment2);
                         tapis = TapisRoulant.trouver(segment1, segment2);
+
+                        Usine.AFFICHER_INDEX = true;
+
+                        Parser.clearScreen();
+                        usine.afficher();
+                        System.out.println();
+
+
+                        int numCase = Parser.getCaseNumber(usine);
+
+                        Usine.AFFICHER_INDEX = false;
+
+                        int[] position = Geometrie.lineaireVersCartesien(numCase, usine.getTailleX());
+                        int x = position[0];
+                        int y = position[1];
+
+                        usine.getLogistique().setTapis(x, y, tapis);
+                        // Fin code pour placer les tapis roulants en une seule unité
+
                         break;
                 }
 
-                Usine.AFFICHER_INDEX = true;
-
-                Parser.clearScreen();
-                usine.afficher();
-                System.out.println();
-
-
-                int numCase = Parser.getCaseNumber(usine);
-
-                Usine.AFFICHER_INDEX = false;
-
-                int[] position = Geometrie.lineaireVersCartesien(numCase, usine.getTailleX());
-                int x = position[0];
-                int y = position[1];
-
                 if (premier_choix == 1 || premier_choix == 2) {
+                    Usine.AFFICHER_INDEX = true;
+
+                    Parser.clearScreen();
+                    usine.afficher();
+                    System.out.println();
+
+
+                    int numCase = Parser.getCaseNumber(usine);
+
+                    Usine.AFFICHER_INDEX = false;
+
+                    int[] position = Geometrie.lineaireVersCartesien(numCase, usine.getTailleX());
+                    int x = position[0];
+                    int y = position[1];
+
+
                     station = createStation(premier_choix, second_choix);
 
                     boolean success = false;
@@ -123,8 +184,6 @@ public class Main {
                     }
 
 
-                } else {
-                    usine.getLogistique().setTapis(x, y, tapis);
                 }
             }
 
