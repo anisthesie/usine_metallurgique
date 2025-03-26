@@ -31,8 +31,21 @@ public class Fournaise extends Machine {
     }
 
     @Override
-    protected void traiterEntree(Usine parent) {
+    public void tic(Usine parent) {
 
+        traiterEntree(parent);
+
+        boolean litharge = composant == IdentiteProduit.ACANTHITE || composant == IdentiteProduit.POUDRE_ACANTHITE;
+        boolean bronze = composant == IdentiteProduit.LINGOT_CUIVRE && etain;
+
+        if (litharge || bronze)
+            travailler(parent);
+
+
+    }
+
+    @Override
+    protected void traiterEntree(Usine parent) {
         int xentree1 = this.getX() - 1;
         int yentree1 = this.getY() - 1;
 
@@ -42,14 +55,6 @@ public class Fournaise extends Machine {
 
         traiterUneEntree(parent, xentree1, yentree1);
         traiterUneEntree(parent, xentree2, yentree2);
-
-        boolean litharge = composant == IdentiteProduit.ACANTHITE || composant == IdentiteProduit.POUDRE_ACANTHITE;
-        boolean bronze = composant == IdentiteProduit.LINGOT_CUIVRE && etain;
-
-        if (litharge || bronze)
-            travailler(parent);
-
-
     }
 
     private void traiterUneEntree(Usine parent, int x, int y) {
