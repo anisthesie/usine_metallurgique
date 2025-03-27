@@ -1,6 +1,6 @@
 package usine;
 
-import usine.geometrie.directions.Direction2D;
+import usine.directions.Direction2D;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,10 +27,9 @@ public class Logistique {
     private String fix;
 
     /**
-     * Matrice contenant l'information sur les tapis roulant et l'usine.
-     * La première dimension est utilisé pour les 'y', la deuxième dimension est utilisé pour les 'x'.
-     * <p>
-     * Exemple : grille[y][x]
+     * Matrice contenant l'information sur les cases de la grille.
+     * contient des TapisRoulant et des Stations.
+     * synchronisé avec le tableau 'cases' dans Usine
      */
     protected Case[][] grille;
     protected List<Produit> produits;
@@ -63,8 +62,8 @@ public class Logistique {
         this.tailleY = tailleY;
         this.grille = new Case[tailleX][tailleY];
 
-        for(int x = 0; x < tailleX; x++) {
-            for(int y = 0; y < tailleY; y++) {
+        for (int x = 0; x < tailleX; x++) {
+            for (int y = 0; y < tailleY; y++) {
                 grille[x][y] = new Case(x, y);
             }
         }
@@ -445,7 +444,7 @@ public class Logistique {
 
         return
                 toStringTier(ligne, Case::afficheHaut) +
-                        toStringTier(ligne, s -> s.afficheMilieu(tailleX)) +
+                        toStringTier(ligne, Case::afficheMilieu) +
                         toStringTier(ligne, Case::afficheBas);
     }
 

@@ -1,7 +1,6 @@
 package usine.stations;
 
 import usine.*;
-import usine.geometrie.Geometrie;
 
 public class Vendeur extends Station {
     //   ....
@@ -12,10 +11,6 @@ public class Vendeur extends Station {
 
     public Vendeur(int positionX, int positionY) {
         super(positionX, positionY);
-    }
-
-    public Vendeur() {
-        super();
     }
 
     @Override
@@ -31,8 +26,8 @@ public class Vendeur extends Station {
     public void placer(int x, int y, Usine parent) throws PlacementIncorrectException {
         Case[] cases = {parent.getCase(x, y)};
 
-        if (!this.areCasesValid(cases))
-            throw new PlacementIncorrectException("Impossible de placer l'élement dans la case (" + Geometrie.cartesienVersLineaire(x, y, parent.getTailleX()) + ")");
+        if (!this.casesValides(cases))
+            throw new PlacementIncorrectException("Impossible de placer l'élement dans la case.");
 
 
         parent.ajouterStation(this);
@@ -42,7 +37,6 @@ public class Vendeur extends Station {
 
         for (Case c : cases) {
             c.setStation(this);
-            c.setSymbole(getSymbole());
             parent.getLogistique().setTapis(c.getX(), c.getY(), TapisRoulant.OCCUPE);
         }
     }

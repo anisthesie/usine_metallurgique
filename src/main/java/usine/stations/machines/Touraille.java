@@ -1,7 +1,6 @@
 package usine.stations.machines;
 
 import usine.*;
-import usine.geometrie.Geometrie;
 
 public class Touraille extends Machine {
     //   ......
@@ -17,10 +16,6 @@ public class Touraille extends Machine {
 
     public Touraille(int positionX, int positionY) {
         super(positionX, positionY);
-    }
-
-    public Touraille() {
-        super();
     }
 
 
@@ -85,8 +80,8 @@ public class Touraille extends Machine {
         };
 
 
-        if (!this.areCasesValid(cases))
-            throw new PlacementIncorrectException("Impossible de placer l'élement dans la case (" + Geometrie.cartesienVersLineaire(x, y, parent.getTailleX()) + ")");
+        if (!this.casesValides(cases))
+            throw new PlacementIncorrectException("Impossible de placer l'élement dans la case.");
 
         parent.ajouterStation(this);
         this.setX(x);
@@ -96,7 +91,6 @@ public class Touraille extends Machine {
             parent.getLogistique().setTapis(c.getX(), c.getY(), TapisRoulant.OCCUPE);
 
             c.setStation(this);
-            c.setSymbole(getSymbole());
         }
     }
 

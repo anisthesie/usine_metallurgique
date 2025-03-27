@@ -1,7 +1,6 @@
 package usine.stations.machines;
 
 import usine.*;
-import usine.geometrie.Geometrie;
 
 //   ......
 //   .eO...
@@ -17,17 +16,13 @@ import usine.geometrie.Geometrie;
 // s( x+2, y )   : Case où la Fournaise place les sorties.
 public class Fournaise extends Machine {
 
-
+    // L'étain est-il présent ?
     private boolean etain = false;
+    // Composant à traiter
     private IdentiteProduit composant = null;
-
 
     public Fournaise(int positionX, int positionY) {
         super(positionX, positionY);
-    }
-
-    public Fournaise() {
-        super();
     }
 
     @Override
@@ -57,6 +52,14 @@ public class Fournaise extends Machine {
         traiterUneEntree(parent, xentree2, yentree2);
     }
 
+    /**
+     * Traite une entrée de la fournaise de grillage.
+     * Même processus pour les deux entrées
+     *
+     * @param parent Usine parente
+     * @param x      Position x de l'entrée
+     * @param y      Position y de l'entrée
+     */
     private void traiterUneEntree(Usine parent, int x, int y) {
 
         if (parent.getLogistique().contiensItem(x, y)) {
@@ -150,8 +153,8 @@ public class Fournaise extends Machine {
         Case[] cases = {parent.getCase(x, y), parent.getCase(x, y - 1), parent.getCase(x + 1, y), parent.getCase(x, y + 1)};
 
 
-        if (!this.areCasesValid(cases))
-            throw new PlacementIncorrectException("Impossible de placer l'élement dans la case (" + Geometrie.cartesienVersLineaire(x, y, parent.getTailleX()) + ")");
+        if (!this.casesValides(cases))
+            throw new PlacementIncorrectException("Impossible de placer l'élement dans la case.");
 
         parent.ajouterStation(this);
         this.setX(x);
@@ -161,7 +164,6 @@ public class Fournaise extends Machine {
             parent.getLogistique().setTapis(c.getX(), c.getY(), TapisRoulant.OCCUPE);
 
             c.setStation(this);
-            c.setSymbole(getSymbole());
         }
 
 

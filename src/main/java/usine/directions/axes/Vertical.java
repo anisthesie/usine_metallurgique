@@ -1,18 +1,20 @@
-package usine.geometrie.directions.axes;
+package usine.directions.axes;
 
 import usine.Produit;
 
 /**
- * Décrit l'axe des 'x'.
+ * Décrit l'axe des 'y'.
  */
-public interface Horizontale extends Axe {
+public interface Vertical extends Axe {
     @Override
     default double getPositionRelative(Produit produit, int posX, int posY ) {
-        return produit.getX() - posX;
+        return produit.getY() - posY;
     }
 
     @Override
     default void setPositionRelative( Produit produit, double positionRelative, int posX, int posY ) {
-        produit.setX( positionRelative + posX );
+        produit.setY( positionRelative + posY );
     }
+
+    int compare(Produit g, Produit d);
 }

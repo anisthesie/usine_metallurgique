@@ -1,4 +1,4 @@
-package usine.geometrie.directions;
+package usine.directions;
 
 public abstract class Positive extends Direction2D {
     private static final double DIRECTION = 1.0;

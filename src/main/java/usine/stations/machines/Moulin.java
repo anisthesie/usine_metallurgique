@@ -1,7 +1,6 @@
 package usine.stations.machines;
 
 import usine.*;
-import usine.geometrie.Geometrie;
 
 public class Moulin extends Machine {
     //   ......
@@ -22,9 +21,6 @@ public class Moulin extends Machine {
         super(positionX, positionY);
     }
 
-    public Moulin() {
-        super();
-    }
 
     @Override
     protected void traiterEntree(Usine parent) {
@@ -117,8 +113,8 @@ public class Moulin extends Machine {
         };
 
 
-        if (!this.areCasesValid(cases))
-            throw new PlacementIncorrectException("Impossible de placer l'élement dans la case (" + Geometrie.cartesienVersLineaire(x, y, parent.getTailleX()) + ")");
+        if (!this.casesValides(cases))
+            throw new PlacementIncorrectException("Impossible de placer l'élement dans la case.");
 
         parent.ajouterStation(this);
         this.setX(x);
@@ -128,7 +124,6 @@ public class Moulin extends Machine {
             parent.getLogistique().setTapis(c.getX(), c.getY(), TapisRoulant.OCCUPE);
 
             c.setStation(this);
-            c.setSymbole(getSymbole());
         }
 
 

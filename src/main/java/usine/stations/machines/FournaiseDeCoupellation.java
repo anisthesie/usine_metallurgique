@@ -1,7 +1,6 @@
 package usine.stations.machines;
 
 import usine.*;
-import usine.geometrie.Geometrie;
 
 public class FournaiseDeCoupellation extends Machine {
     //   .....
@@ -15,10 +14,6 @@ public class FournaiseDeCoupellation extends Machine {
 
     public FournaiseDeCoupellation(int positionX, int positionY) {
         super(positionX, positionY);
-    }
-
-    public FournaiseDeCoupellation() {
-        super();
     }
 
     @Override
@@ -106,8 +101,8 @@ public class FournaiseDeCoupellation extends Machine {
         Case[] cases = {parent.getCase(x, y), parent.getCase(x, y - 1),};
 
 
-        if (!this.areCasesValid(cases))
-            throw new PlacementIncorrectException("Impossible de placer l'élement dans la case (" + Geometrie.cartesienVersLineaire(x, y, parent.getTailleX()) + ")");
+        if (!this.casesValides(cases))
+            throw new PlacementIncorrectException("Impossible de placer l'élement dans la case.");
 
         parent.ajouterStation(this);
         this.setX(x);
@@ -118,7 +113,6 @@ public class FournaiseDeCoupellation extends Machine {
             parent.getLogistique().setTapis(c.getX(), c.getY(), TapisRoulant.OCCUPE);
 
             c.setStation(this);
-            c.setSymbole(getSymbole());
         }
 
 

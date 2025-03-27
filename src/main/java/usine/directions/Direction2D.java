@@ -1,7 +1,7 @@
-package usine.geometrie.directions;
+package usine.directions;
 
 import usine.Produit;
-import usine.geometrie.directions.axes.Axe;
+import usine.directions.axes.Axe;
 
 import java.util.Comparator;
 
