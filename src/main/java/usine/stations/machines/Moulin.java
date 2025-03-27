@@ -58,6 +58,8 @@ public class Moulin extends Machine {
     @Override
     protected void travailler(Usine parent) {
 
+        compteur++;
+
         int xsortie = this.getX() + 2;
         int ysortie = this.getY();
 
@@ -103,7 +105,7 @@ public class Moulin extends Machine {
                 }
                 break;
         }
-        compteur++;
+
     }
 
 

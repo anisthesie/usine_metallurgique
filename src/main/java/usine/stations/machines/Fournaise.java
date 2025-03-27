@@ -114,6 +114,7 @@ public class Fournaise extends Machine {
     @Override
     protected void travailler(Usine parent) {
 
+        compteur++;
 
         int xsortie = this.getX() + 2;
         int ysortie = this.getY();
@@ -140,7 +141,7 @@ public class Fournaise extends Machine {
             compteur = 0;
         }
 
-        compteur++;
+
     }
 
     @Override

@@ -6,25 +6,20 @@ import usine.stations.Station;
 public class Case {
 
     private Station station;
-    private Usine usine;
 
     private String symbole;
     private int x;
     private int y;
-    private int indexLineaire;
 
     private TapisRoulant tapis;
 
-    public Case(int x, int y, Usine usine) {
-        this(x, y, usine, TapisRoulant.VIDE);
+    public Case(int x, int y) {
+        this(x, y, TapisRoulant.VIDE);
     }
 
-    public Case(int x, int y, Usine usine, TapisRoulant tapis) {
+    public Case(int x, int y, TapisRoulant tapis) {
         this.x = x;
         this.y = y;
-        this.usine = usine;
-        this.indexLineaire = Geometrie.cartesienVersLineaire(x, y, usine.getTailleX());
-        this.symbole = String.valueOf(indexLineaire);
         this.station = null;
         this.tapis = tapis;
     }
@@ -75,9 +70,9 @@ public class Case {
         return tapis.afficheHaut();
     }
 
-    public String afficheMilieu() {
+    public String afficheMilieu(int tailleX) {
         if (this.tapis == TapisRoulant.VIDE && Usine.AFFICHER_INDEX) {
-            StringBuilder retour = new StringBuilder(String.valueOf(indexLineaire));
+            StringBuilder retour = new StringBuilder(String.valueOf(getIndexLineaire(tailleX)));
             int indentationRelative = 3 - retour.length();
             for (int i = 0; i < indentationRelative; i++)
                 retour.append(" ");
@@ -92,6 +87,10 @@ public class Case {
 
 
         return tapis.afficheMilieu();
+    }
+
+    public int getIndexLineaire(int tailleX) {
+        return Geometrie.cartesienVersLineaire(x, y, tailleX);
     }
 
     public String afficheBas() {

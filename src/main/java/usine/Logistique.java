@@ -55,19 +55,29 @@ public class Logistique {
      * @param tailleX Contiens le nombre de colonne de la matrice.  Doit être plus grand que 0.
      * @param tailleY Contiens le nombre de lignes de la matrice.  Doit être plus grand que 0.
      */
-    public Logistique(int tailleX, int tailleY, Usine usine) {
+    public Logistique(int tailleX, int tailleY) {
         assert 0 < tailleX;
         assert 0 < tailleY;
 
         this.tailleX = tailleX;
         this.tailleY = tailleY;
-        this.grille = usine.getCases();
+        this.grille = new Case[tailleX][tailleY];
+
+        for(int x = 0; x < tailleX; x++) {
+            for(int y = 0; y < tailleY; y++) {
+                grille[x][y] = new Case(x, y);
+            }
+        }
 
         fix = Stream.generate(() -> SEP_CHAR)
                 .limit(4 * tailleX + 1)
                 .collect(Collectors.joining("", "", "\n"));
 
         produits = new ArrayList<>();
+    }
+
+    public void setGrille(Case[][] grille) {
+        this.grille = grille;
     }
 
     /**
@@ -435,7 +445,7 @@ public class Logistique {
 
         return
                 toStringTier(ligne, Case::afficheHaut) +
-                        toStringTier(ligne, Case::afficheMilieu) +
+                        toStringTier(ligne, s -> s.afficheMilieu(tailleX)) +
                         toStringTier(ligne, Case::afficheBas);
     }
 

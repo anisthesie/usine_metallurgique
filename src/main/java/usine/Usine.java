@@ -19,11 +19,11 @@ public class Usine {
     private List<String> notifications;
 
     // contient les tapis Roulants.
-    protected Logistique logistique;
+    public Logistique logistique;
     // contient les stations de l'usine.
     protected Case[][] cases;
     // contient les stations
-    protected List<Station> stations;
+    private List<Station> stationList;
     // lie les produits avec leur nombre de ventes
     protected Map<IdentiteProduit, Integer> ventes;
 
@@ -31,11 +31,12 @@ public class Usine {
         ventes = new HashMap<IdentiteProduit, Integer>();
         this.tailleX = tailleX;
         this.tailleY = tailleY;
-        stations = new ArrayList<>();
+        stationList = new ArrayList<>();
         this.cases = new Case[tailleY][tailleX];
         this.notifications = new ArrayList<>();
         initCases();
-        logistique = new Logistique(tailleX, tailleY, this);
+        logistique = new Logistique(tailleX, tailleY);
+        logistique.setGrille(cases);
     }
 
     public void setTapisHorizontal(int y, int x1, int x2) {
@@ -56,7 +57,7 @@ public class Usine {
 
     public void tic() {
         logistique.tic();
-        for (Station station : stations) {
+        for (Station station : stationList) {
            if(station.isPlaced())
                station.tic(this);
         }
@@ -79,7 +80,7 @@ public class Usine {
     }
 
     public void ajouterStation(Station station) {
-        stations.add(station);
+        stationList.add(station);
     }
 
     public int getTailleX() {
@@ -114,7 +115,7 @@ public class Usine {
     private void initCases() {
         for (int y = 0; y < tailleY; ++y) {
             for (int x = 0; x < tailleX; ++x) {
-                cases[y][x] = new Case(x, y, this);
+                cases[y][x] = new Case(x, y);
             }
         }
     }

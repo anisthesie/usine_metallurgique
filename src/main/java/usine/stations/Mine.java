@@ -36,6 +36,7 @@ public class Mine extends Station {
 
     @Override
     public void tic(Usine parent) {
+        compteur++;
         switch (minerai) {
             case CHARBON:
                 if (compteur == 1) {
@@ -82,7 +83,6 @@ public class Mine extends Station {
                 }
                 break;
         }
-        compteur++;
     }
 
     @Override

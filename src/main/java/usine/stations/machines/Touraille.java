@@ -55,6 +55,8 @@ public class Touraille extends Machine {
     @Override
     protected void travailler(Usine parent) {
 
+        compteur++;
+
         int xsortie = this.getX() + 2;
         int ysortie = this.getY() + 1;
 
@@ -70,7 +72,7 @@ public class Touraille extends Machine {
             produitEnCours = null;
             compteur = 0;
         }
-        compteur++;
+
     }
 
     @Override

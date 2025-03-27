@@ -107,6 +107,8 @@ public class FournaiseDeGrillage extends Machine {
     @Override
     protected void travailler(Usine parent) {
 
+        compteur++;
+
         int xsortie = this.getX() + 2;
         int ysortie = this.getY();
 
@@ -157,7 +159,7 @@ public class FournaiseDeGrillage extends Machine {
 
         }
 
-        compteur++;
+
     }
 
 

@@ -51,6 +51,8 @@ public class FournaiseDeCoupellation extends Machine {
     @Override
     protected void travailler(Usine parent) {
 
+        compteur++;
+
         int xsortie = this.getX() + 1;
         int ysortie = this.getY();
 
@@ -95,7 +97,7 @@ public class FournaiseDeCoupellation extends Machine {
                 }
                 break;
         }
-        compteur++;
+
     }
 
 
