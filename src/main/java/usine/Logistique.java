@@ -62,8 +62,8 @@ public class Logistique {
         this.tailleY = tailleY;
         this.grille = new Case[tailleY][tailleX];
 
-        for (int y = 0; y < tailleY; y++) {
-            for (int x = 0; x < tailleX; x++) {
+        for (int x = 0; x < tailleX; x++) {
+            for (int y = 0; y < tailleY; y++) {
                 grille[y][x] = new Case(x, y);
             }
         }
@@ -291,11 +291,9 @@ public class Logistique {
         }
 
         for (Produit i : produits) {
-            boolean b = estALaCoordonnee(i, x, y);
-            boolean b1 = presqueEntier.test(i.getX()) || presqueEntier.test(i.getY());
-            if (b
+            if (estALaCoordonnee(i, x, y)
                     &&
-                    b1
+                    (presqueEntier.test(i.getX()) || presqueEntier.test(i.getY()))
             ) {
                 throw new PlacementIncorrectException("Il y a déjà un item à cette position.");
             }
